@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+/* subtle underline for center lines on larger screens (optional) */
+.stats-midline {
+  position: relative;
+}
+
+/* small golden accent for the big number if you want glow */
+.big-gold {
+  text-shadow: 0 6px 18px rgba(145,107,9,0.08);
+}
