@@ -7,17 +7,17 @@ import "./styles/heroText.css";
 const slides = [
   {
     id: 1,
-    video: "/videos/vid-1.mp4",
+    // video: "/videos/vid-1.mp4",
     images: ["/images/img-1.png", "/images/img-2.png", "/images/img-3.png"],
   },
   {
     id: 2,
-    video: "/videos/vid-1.mp4",
+    // video: "/videos/vid-1.mp4",
     images: ["/images/img-1.png", "/images/img-2.png", "/images/img-3.png"],
   },
   {
     id: 3,
-    video: "/videos/vid-1.mp4",
+    // video: "/videos/vid-1.mp4",
     images: ["/images/img-1.png", "/images/img-2.png", "/images/img-3.png"],
   },
 ];
