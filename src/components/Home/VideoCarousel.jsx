@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import "keen-slider/keen-slider.min.css";
-import "./styles/heroText.css"; 
+import "../styles/heroText.css"; 
 
 const slides = [
   {

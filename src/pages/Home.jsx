@@ -1,7 +1,8 @@
 import React from "react";
-import VideoCarousel from "../components/VideoCarousel";
-import AboutOfferings from "../components/AboutOfferings";
-import StatsShowcase from "../components/StatsShowcase";
+import VideoCarousel from "../components/Home/VideoCarousel";
+import AboutOfferings from "../components/Home/AboutOfferings";
+import StatsShowcase from "../components/Home/StatsShowcase";
+import InstagramSection from "../components/Home/InstagramSection";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <VideoCarousel />
       <AboutOfferings/>
       <StatsShowcase/>
+      <InstagramSection/>
     </div>
   );
 }
