@@ -69,13 +69,6 @@ export default function AboutOfferings() {
       desc: "Smart features and heartfelt touches crafted for your comfort and ease.",
       offset: "-translate-y-12",
     },
-    {
-      title: "Convenient Locations",
-      // video: "/videos/glimpse-2.MOV",
-      color: "text-orange-500",
-      desc: "Stay connected to what matters most — business, leisure, and beyond.",
-      offset: "translate-y-4",
-    },
   ];
 
   // ---- Card subcomponent (local) ----
@@ -94,14 +87,13 @@ export default function AboutOfferings() {
         {/* ====== Video Card ====== */}
         <motion.div
           className="relative w-52 h-64 overflow-hidden shadow-lg"
-          initial={{ scale: 1, borderRadius: "50%" }}
+          initial={{ borderRadius: "50%" }}
           whileHover={{
-            scale: 1.05,
-            borderRadius: "1.5rem",
+            borderRadius: "12px",
           }}
           transition={{
             duration: 0.7,
-            ease: [0.45, 0, 0.25, 1],
+            ease: [0.25, 0.1, 0.25, 1],
           }}
         >
           <video
@@ -144,7 +136,7 @@ export default function AboutOfferings() {
 
   // ---- main render ----
   return (
-    <div className="bg-white text-center py-14 px-6">
+    <div className="bg-white text-center pt-14 px-6 pb-6">
       {/* ====== About Section ====== */}
       <section className="max-w-4xl mx-auto mb-24">
         <h2 className="text-3xl md:text-4xl font-bold text-[#0a1d4d] mb-6">
@@ -166,7 +158,7 @@ export default function AboutOfferings() {
         whileInView="show"
         viewport={{ once: true, amount: 0.2 }}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 justify-items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 justify-items-center">
           {cards.map((card, i) => (
             <Card key={i} card={card} index={i} />
           ))}

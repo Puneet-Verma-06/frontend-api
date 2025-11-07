@@ -56,7 +56,7 @@ export default function StatsShowcase({
 
   return (
     <section className="w-full bg-white">
-      <div className="max-w-6xl mx-auto px-6 pt-1 pb-10">
+      <div className="max-w-6xl mx-auto px-6 pb-10">
         {/* From */}
         <motion.p initial="hidden" animate="show" variants={entrance} className="text-center text-sm font-medium text-sky-900">
           From
@@ -68,7 +68,7 @@ export default function StatsShowcase({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: prefersReduced ? 0 : 0.6, ease: [0.2, 0.8, 0.2, 1] }}
           aria-live="polite"
-          className="mt-6 text-center select-none"
+          className="mt-1 text-center select-none"
         >
           <span
             className="font-extrabold leading-tight"
@@ -133,7 +133,7 @@ export default function StatsShowcase({
           transition={{ delay: 0.15, duration: prefersReduced ? 0 : 0.7 }}
           className="mt-12 text-center text-2xl md:text-3xl text-[#8b5e3c] italic"
         >
-          <span style={{ fontFamily: "'Great Vibes', cursive", display: "inline-block" }}>
+          <span style={{ display: "inline-block" }} className="italic text-[#8b5e3c] leading-relaxed">
             However "At the heart of it all, it's You & Us."
           </span>
         </motion.blockquote>

@@ -103,7 +103,7 @@ export default function VideoCarousel() {
             />
 
             {/* Correct Tailwind gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/80" />
+            <div className="absolute inset-0 bg-linear-to-b from-black/50 via-black/30 to-black/80" />
 
             {/* Hero text (centered & cinematic) */}
             <div className="relative z-10 flex flex-col justify-center items-center text-center h-full px-6">
@@ -144,7 +144,7 @@ export default function VideoCarousel() {
 
       {/* arrows */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="max-w-8xl mx-auto h-full px-6 flex items-center justify-between">
+        <div className="mx-auto h-full px-12 flex items-center justify-between">
           <button
             onClick={() => slider?.current?.prev()}
             className="pointer-events-auto hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white shadow-md transition"

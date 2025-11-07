@@ -23,7 +23,7 @@ export default function Navbar() {
       }`}
       style={{ height: 64 }}
     >
-      <div className="max-w-8xl mx-auto h-full px-6 flex items-center justify-between">
+      <div className="mx-auto h-full px-12 flex items-center justify-between">
         {/* 🔹 Logo */}
         <Link to="/" className="flex items-center space-x-2">
           <img
@@ -34,35 +34,37 @@ export default function Navbar() {
         </Link>
 
         {/* 🔹 Navigation Links */}
-        <div className="flex items-center space-x-6">
-          <Link
-            to="/host"
-            className={`nav-link text-sm md:text-base font-medium ${
-              scrolled ? "text-[#C59A2F]" : "text-white/90"
-            }`}
-          >
-            For Host
-          </Link>
+        <div>
+          <div className="flex items-center space-x-6">
+            <Link
+              to="/host"
+              className={`nav-link text-sm md:text-base font-medium ${
+                scrolled ? "text-[#C59A2F]" : "text-white/90"
+              }`}
+            >
+              For Host
+            </Link>
 
-          <Link
-            to="/creators"
-            className={`nav-link text-sm md:text-base font-medium ${
-              scrolled ? "text-[#C59A2F]" : ""
-            }`}
-          >
-            For Creators
-          </Link>
+            <Link
+              to="/creators"
+              className={`nav-link text-sm md:text-base font-medium ${
+                scrolled ? "text-[#C59A2F]" : ""
+              }`}
+            >
+              For Creators
+            </Link>
 
-          {/* 🔹 Gold CTA — with X-axis slide animation */}
-          <Link
-            to="/login"
-            className={`gold-cta-x relative inline-flex items-center gap-2 px-5 py-2 rounded-sm font-medium transform transition-all duration-300 bg-[#C59A2F] text-white shadow-lg`}
-          >
-            <FiUser
-              className={`transition-transform duration-300 text-white`}
-            />
-            <span className="cta-text">Login / Sign</span>
-          </Link>
+            {/* 🔹 Gold CTA — with X-axis slide animation */}
+            <Link
+              to="/login"
+              className={`gold-cta-x relative inline-flex items-center gap-2 px-5 py-2 rounded-sm font-medium transform transition-all duration-300 bg-[#C59A2F] text-white shadow-lg`}
+            >
+              <FiUser
+                className={`transition-transform duration-300 text-white`}
+              />
+              <span className="cta-text">Login / Sign</span>
+            </Link>
+          </div>
 
           {/* 🔹 Mobile Menu */}
           <button
