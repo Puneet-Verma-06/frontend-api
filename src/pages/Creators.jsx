@@ -1,11 +1,9 @@
-// src/components/CreatorsPage.jsx
-import React from "react";
 import Carousel from "../components/Carousel";
 import { FiMail, FiPhone } from "react-icons/fi";
 import { motion } from "framer-motion";
 
 // Images
-import heroThumb from "/images/carousel-img1.png";
+// import heroThumb from "/images/carousel-img1.png";
 import smallImgA from "/images/carousel-img1.png";
 import smallImgB from "/images/carousel-img2.png";
 import smallImgC from "/images/carousel-img3.png";
@@ -85,7 +83,7 @@ export default function CreatorsPage() {
             <div className="h-full border border-[#f1d18a] bg-white p-8 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300">
               <p className="text-sm leading-relaxed mb-5">
                 <span className="font-semibold text-[#b8860b]">Our philosophy</span> is simple:
-                meaningful marketing comes from authentic connection. We want to empower emerging
+                meaningful connections comes from story telling. We want to empower emerging
                 voices, giving them the visibility they deserve. Through our initiative, we help
                 small creators, bloggers, and storytellers shine brighter.
               </p>

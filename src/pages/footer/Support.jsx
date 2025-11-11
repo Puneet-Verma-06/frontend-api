@@ -3,17 +3,9 @@ import { FiMail, FiPhone } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 
 const GOLD = {
-  border: "border-[#d4af37]",       
-  accent: "text-[#b8860b]",         
-  softBorder: "border-[#f1d18a]",   
-};
-
-const HOST_CONTACT = {
-  label: "For Hosts",
-  name: "Suraj",
-  whatsapp: "+91 9389860637", 
-  email: "teamsathithya@gmail.com",
-  phone: "+91 93898 60637",
+  border: "border-[#d4af37]", // Deep gold border
+  accent: "text-[#b8860b]", // Text gold tone
+  softBorder: "border-[#f1d18a]", // Soft gold border
 };
 
 const USER_CONTACT = {
@@ -25,9 +17,12 @@ const USER_CONTACT = {
 };
 
 const SUPPORT_HOURS = "10:00 AM – 5:00 PM IST";
-
-const makeWaLink = (num, prefill = "") =>
-  `https://wa.me/${num}${prefill ? `?text=${encodeURIComponent(prefill)}` : ""}`;
+const makeWaLink = (num, prefill = "") => {
+  const cleaned = num.replace(/[^0-9]/g, "");
+  return `https://wa.me/${cleaned}${
+    prefill ? `?text=${encodeURIComponent(prefill)}` : ""
+  }`;
+};
 
 function ContactCard({ label, person }) {
   return (
@@ -42,7 +37,9 @@ function ContactCard({ label, person }) {
         >
           {label}
         </h4>
-        <span className={`text-[11px] px-2 py-1 rounded-full bg-[#fff7e0] ${GOLD.accent} border ${GOLD.softBorder}`}>
+        <span
+          className={`text-[11px] px-2 py-1 rounded-full bg-[#fff7e0] ${GOLD.accent} border ${GOLD.softBorder}`}
+        >
           Priority Support
         </span>
       </div>
@@ -50,16 +47,21 @@ function ContactCard({ label, person }) {
       <p className="text-sm text-gray-700 mb-1">
         <span className="font-medium">{person.name}</span>
       </p>
-      <p className="text-xs text-gray-500 mb-5">Typically responds within business hours</p>
+      <p className="text-xs text-gray-500 mb-5">
+        Typically responds within business hours
+      </p>
 
       <div className="flex flex-col sm:flex-row gap-3">
         <a
-          href={makeWaLink(person.whatsapp, `Hi ${person.name}, I need help (${label}).`)}
+          href={makeWaLink(
+            person.whatsapp,
+            `Hi ${person.name}, I need help (${label}).`
+          )}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium
                      bg-green-50 hover:bg-green-100 border border-green-200 focus:outline-none
-                     focus:ring-2 focus:ring-offset-2 focus:ring-green-400"
+                     focus:ring-offset-2 focus:ring-0"
           aria-label={`Open WhatsApp chat with ${person.name}`}
         >
           <FaWhatsapp className="h-4 w-4" />
@@ -67,10 +69,12 @@ function ContactCard({ label, person }) {
         </a>
 
         <a
-          href={`mailto:${person.email}`}
+          href={`mailto:${person.email}?subject=${encodeURIComponent(
+            "Help Request from Athithya User"
+          )}&body=${encodeURIComponent("Hi Surya,\n\nI need help with...")}`}
           className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium
                      bg-white hover:bg-gray-50 border border-gray-200 focus:outline-none
-                     focus:ring-2 focus:ring-offset-2 focus:ring-[#d4af37]"
+                     focus:ring-offset-2 focus:ring-0"
           aria-label={`Send email to ${person.name}`}
         >
           <FiMail className="h-4 w-4" />
@@ -81,7 +85,7 @@ function ContactCard({ label, person }) {
           href={`tel:${person.phone.replace(/\s/g, "")}`}
           className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md text-sm font-medium
                      bg-white hover:bg-gray-50 border border-gray-200 focus:outline-none
-                     focus:ring-2 focus:ring-offset-2 focus:ring-[#d4af37]"
+                     focus:ring-offset-2 focus:ring-0"
           aria-label={`Call ${person.name}`}
         >
           <FiPhone className="h-4 w-4" />
@@ -115,37 +119,29 @@ export default function HelpSupportPage() {
           </div>
         </div>
 
-        {/* Two top chips (visual anchors only) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start mb-10">
-          <div className="flex justify-center sm:justify-start">
-            <div className={`px-4 py-2 rounded-full bg-white text-xs font-semibold shadow border ${GOLD.softBorder} ${GOLD.accent}`}>
-              For Hosts
-            </div>
-          </div>
-          <div className="flex justify-center sm:justify-end">
-            <div className={`px-4 py-2 rounded-full bg-white text-xs font-semibold shadow border ${GOLD.softBorder} ${GOLD.accent}`}>
-              For Users
-            </div>
-          </div>
-        </div>
-
-        {/* Contact cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-          <ContactCard label="For Hosts" person={HOST_CONTACT} />
+        {/* Single contact card (For Users only) */}
+        <div className="mx-auto mb-10">
           <ContactCard label="For Users" person={USER_CONTACT} />
         </div>
 
-        {/* Availability / SLA */}
-        <div className={`rounded-2xl bg-white p-6 text-sm text-gray-700 shadow-md border ${GOLD.softBorder}`}>
+        <div
+          className={`rounded-2xl bg-white p-6 text-sm text-gray-700 shadow-md border ${GOLD.softBorder} mx-auto`}
+        >
           <div className="flex items-start gap-3">
-            <div className="h-2.5 w-2.5 rounded-full bg-emerald-500 relative top-1" aria-hidden />
+            <div
+              className="h-2.5 w-2.5 rounded-full bg-emerald-500 relative top-1"
+              aria-hidden
+            />
             <div>
               <p className="mb-2">
-                <strong className={GOLD.accent}>Availability:</strong> We’re available on WhatsApp from{" "}
-                <span className="font-medium">{SUPPORT_HOURS}</span>. Messages outside these hours will be responded to the next business day.
+                <strong className={GOLD.accent}>Availability:</strong> We’re
+                available on WhatsApp from{" "}
+                <span className="font-medium">{SUPPORT_HOURS}</span>. Messages
+                outside these hours will be responded to the next business day.
               </p>
               <p className="text-xs text-gray-500">
-                Tip: For quicker resolution, include your booking ID, registered phone/email, and a brief description of the issue.
+                Tip: For quicker resolution, include your booking ID, registered
+                phone/email, and a brief description of the issue.
               </p>
             </div>
           </div>

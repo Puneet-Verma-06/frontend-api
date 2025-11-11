@@ -123,7 +123,7 @@ export default function VideoCarousel() {
                 </h1>
 
                 <p className="hero-tag text-white/70 text-sm md:text-lg tracking-wide max-w-xl mx-auto">
-                  Discover stories, connect with creators, and live the golden moment.
+                  where You, Locals & Experiences blend stories.
                 </p>
               </div>
 
