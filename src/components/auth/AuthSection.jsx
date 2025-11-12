@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ⬅️ add this
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 import OtpModal from "./OtpModal";
@@ -6,6 +7,13 @@ import OtpModal from "./OtpModal";
 export default function AuthSection({ onClose }) {
   const [screen, setScreen] = useState("login"); // "login" | "register" | "otp"
   const [regData, setRegData] = useState(null);
+  const navigate = useNavigate(); // ⬅️ add this
+
+  const handleAuthed = () => {
+    // data is whatever your API returns; token is already saved in modals
+    onClose?.();
+    navigate("/explore"); 
+  };
 
   if (screen === "register") {
     return (
@@ -26,6 +34,7 @@ export default function AuthSection({ onClose }) {
         regData={regData}
         onClose={onClose}
         onBack={() => setScreen("register")}
+        onSuccess={handleAuthed}  
       />
     );
   }
@@ -34,6 +43,7 @@ export default function AuthSection({ onClose }) {
     <LoginModal
       onClose={onClose}
       onSwitchToRegister={() => setScreen("register")}
+      onSuccess={handleAuthed}    
     />
   );
 }

@@ -8,6 +8,7 @@ import SpecialMentionsPage from "./pages/SpecialMentions";
 import HelpSupportPage from "./pages/footer/Support";
 import { Explore } from "./pages/Explore";
 import { useEffect } from "react";
+import ConnectPage from "./pages/ConnectPage";
 
 // Component that handles conditional navbar rendering
 function Layout() {
@@ -30,6 +31,7 @@ function Layout() {
           <Route path="/creators" element={<Creators />} />
           <Route path="/support" element={<HelpSupportPage />} />
           <Route path="/explore" element={<Explore />} />
+          <Route path="/connect" element={<ConnectPage />} />
         </Routes>
       </main>
 

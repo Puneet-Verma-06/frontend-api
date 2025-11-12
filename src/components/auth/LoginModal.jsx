@@ -10,7 +10,7 @@ export default function LoginModal({ onClose, onSuccess, onSwitchToRegister }) {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
 
-  const GOLD = "#d4af37"; 
+  const GOLD = "#d4af37";
 
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && onClose?.();
@@ -38,13 +38,14 @@ export default function LoginModal({ onClose, onSuccess, onSwitchToRegister }) {
 
     const token = res.data?.token;
     if (token) localStorage.setItem("auth_token", token);
-    onSuccess?.(res.data);
+
+    onSuccess?.(res.data); //  this triggers the redirect via AuthSection
     onClose?.();
   };
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/50"
+      className="fixed inset-0 z-1000 flex items-center justify-center bg-black/50"
       onClick={onClose}
     >
       <div

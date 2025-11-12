@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 import { FaBell } from "react-icons/fa";
 import { MdAdd, MdPerson } from "react-icons/md";
@@ -45,6 +45,8 @@ export default function LoginNav() {
 
     fetchNotifications();
   }, []);
+
+  const navigate = useNavigate()
 
   return (
     <nav
@@ -146,6 +148,18 @@ export default function LoginNav() {
               >
                 Profile
               </Link>
+
+              {/* Logout Option */}
+              <button
+                onClick={() => {
+                  localStorage.removeItem("auth_token"); // clear token
+                  setDropdownOpen(false);
+                  navigate("/");
+                }}
+                className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-red-500 hover:text-white transition-colors"
+              >
+                Logout
+              </button>
             </div>
           </div>
         </div>
