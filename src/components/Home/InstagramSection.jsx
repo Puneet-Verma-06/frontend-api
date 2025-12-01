@@ -10,9 +10,9 @@ import {
 import { FaInstagram } from "react-icons/fa";
 
 const videos = [
-  "https://www.w3schools.com/html/mov_bbb.mp4",
-  "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
-  "https://www.w3schools.com/html/movie.mp4",
+  "https://res.cloudinary.com/dvjqisuve/video/upload/v1762853268/VID-20251108-WA0014_ohtvtr.mp4",
+  "https://res.cloudinary.com/dvjqisuve/video/upload/v1762853247/VID-20251108-WA0022_cahvgb.mp4",
+  "https://res.cloudinary.com/dvjqisuve/video/upload/v1762853116/Deepak-11_oampjk.mp4",
 ];
 
 export default function InstagramSection() {
@@ -28,7 +28,7 @@ export default function InstagramSection() {
     stopAuto();
     autoRef.current = setTimeout(() => {
       setIndex((i) => (i + 1) % videos.length);
-    }, 3500);
+    }, 6000);
   };
 
   const stopAuto = () => {
@@ -48,14 +48,45 @@ export default function InstagramSection() {
   };
 
   const markers = [
-    { id: 1, top: "30%", left: "31.5%", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_CUSQkY7GTpNwu5GTdlEs10L7G57WpVIilA&s" },
-    { id: 2, top: "14.3%", left: "73.5%", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_CUSQkY7GTpNwu5GTdlEs10L7G57WpVIilA&s" },
-    { id: 3, top: "85.7%", left: "43%", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_CUSQkY7GTpNwu5GTdlEs10L7G57WpVIilA&s" },
-    { id: 4, top: "65.6%", left: "88%", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_CUSQkY7GTpNwu5GTdlEs10L7G57WpVIilA&s" },
+    {
+      id: 1,
+      top: "30%",
+      left: "31.5%",
+      img: "https://res.cloudinary.com/dvjqisuve/image/upload/v1762853288/IMG-20251108-WA0038_kcm8vg.jpg",
+      link: "https://www.instagram.com/p/DQ_vDbskyUU/?img_index=2",
+      size: 250,
+    },
+    {
+      id: 2,
+      top: "14.3%",
+      left: "73.5%",
+      img: "https://res.cloudinary.com/dvjqisuve/image/upload/v1762853138/24b96e84-d874-43e6-8022-3dd5d8ff8052_odf2lg.jpg",
+      link: "https://www.instagram.com/p/DQJj4diEpcz/?img_index=6",
+      size: 200,
+    },
+    {
+      id: 3,
+      top: "85.7%",
+      left: "43%",
+      img: "https://res.cloudinary.com/dvjqisuve/image/upload/v1762853301/IMG-20251108-WA0029_f93xn9.jpg",
+      link: "https://www.instagram.com/p/DQb_GFbEyoV/",
+      size: 170,
+    },
+    {
+      id: 4,
+      top: "65.6%",
+      left: "88%",
+      img: "https://res.cloudinary.com/dvjqisuve/image/upload/v1762853151/c5a0b2f2-2382-47d4-98fc-1dd2e3d63051_vpfetu.jpg",
+      link: "https://www.instagram.com/p/DRCCxU-kiDS/",
+      size: 190,
+    },
   ];
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 pt-3 pb-16" style={{ minHeight: 560 }}>
+    <section
+      className="w-full max-w-7xl mx-auto px-4 pt-3 pb-16"
+      style={{ minHeight: 560 }}
+    >
       {/* Heading */}
       <div className="text-center mb-6">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
@@ -88,7 +119,7 @@ export default function InstagramSection() {
             {/* Screen */}
             <div className="absolute inset-1.5 rounded-[22px] bg-black overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
-                <AnimatePresence initial={false} mode="wait">
+                <AnimatePresence initial={false} mode="popLayout">
                   <motion.video
                     key={index}
                     src={videos[index]}
@@ -97,10 +128,14 @@ export default function InstagramSection() {
                     muted
                     loop
                     className="w-full h-full object-cover"
-                    initial={{ opacity: 0, y: 16, scale: 0.99 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -16, scale: 0.99 }}
-                    transition={{ duration: 0.35 }}
+                    initial={{ y: "100%" }}
+                    animate={{ y: "0%" }}
+                    exit={{ y: "-100%" }}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.25, 0.8, 0.25, 1],
+                    }}
+                    style={{ position: "absolute", inset: 0 }}
                   />
                 </AnimatePresence>
               </div>
@@ -159,20 +194,28 @@ export default function InstagramSection() {
               className="w-full h-[520px]"
             />
             {markers.map((m) => (
-              <button
+              <a
                 key={m.id}
+                href={m.link}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="absolute transform -translate-x-1/2 -translate-y-1/2 group"
                 style={{ top: m.top, left: m.left }}
-                onClick={() => alert(`Clicked marker ${m.id}`)}
               >
-                <div className="w-44 h-44 rounded-full overflow-hidden border-6 border-[#C59A2F]">
+                <div
+                  className="rounded-full overflow-hidden border-6 border-[#C59A2F]"
+                  style={{
+                    width: m.size,
+                    height: m.size,
+                  }}
+                >
                   <img
                     src={m.img}
                     alt={`marker-${m.id}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                   />
                 </div>
-              </button>
+              </a>
             ))}
           </div>
         </div>

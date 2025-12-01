@@ -46,3 +46,10 @@
   animation: shineOnce 1.4s ease forwards;
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

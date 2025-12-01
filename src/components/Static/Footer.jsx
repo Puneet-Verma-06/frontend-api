@@ -1,4 +1,3 @@
-import React from "react";
 import { FaInstagram, FaLinkedinIn, FaYoutube, FaRegCopyright } from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
@@ -12,7 +11,7 @@ export default function Footer() {
           {/* --- Column 1: Logo + Address + About --- */}
           <div className="flex flex-col gap-4">
             <img
-              src="/atithya_logo.jpg"
+              src="/athithya-logo.png"
               alt="Athithya logo"
               className="w-32 mb-3"
             />

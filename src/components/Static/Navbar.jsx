@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FiUser, FiMenu } from "react-icons/fi";
 import { createPortal } from "react-dom";
 import AuthModal from "../auth/AuthSection";
-import "../styles/Navbar.css";
+import "../styles/navbar.css";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -43,29 +43,29 @@ export default function Navbar() {
       <div className="mx-auto h-full px-12 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2">
-          <img src="/atithya_logo.jpg" alt="Athithya logo" className="h-11 w-auto object-contain" />
+          <img src="/athithya-logo.png" alt="Athithya logo" className="h-13 w-auto object-contain" />
         </Link>
 
         {/* Links + CTA */}
         <div>
           <div className="flex items-center space-x-6">
-            <Link
+            {/* <Link
               to="/host"
               className={`nav-link text-sm md:text-base font-medium ${
                 scrolled ? "text-[#C59A2F]" : "text-white/90"
               }`}
             >
               For Host
-            </Link>
+            </Link> */}
 
-            <Link
+            {/* <Link
               to="/creators"
               className={`nav-link text-sm md:text-base font-medium ${
                 scrolled ? "text-[#C59A2F]" : "text-white/90"
               }`}
             >
               For Creators
-            </Link>
+            </Link> */}
 
             <button
               type="button"

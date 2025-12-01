@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import "../styles/Navbar.css";
-import { FaBell } from "react-icons/fa";
-import { MdAdd, MdPerson } from "react-icons/md";
+import "../styles/navbar.css";
+import { FaBell, FaHamburger } from "react-icons/fa";
+import { MdAdd } from "react-icons/md";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 export default function LoginNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -46,7 +47,7 @@ export default function LoginNav() {
     fetchNotifications();
   }, []);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <nav
@@ -65,7 +66,7 @@ export default function LoginNav() {
           className="flex items-center space-x-2 hover:opacity-90 transition-opacity"
         >
           <img
-            src="/atithya_logo.jpg"
+            src="/athithya-logo.png"
             alt="Athithya Logo"
             className="h-11 w-auto object-contain"
           />
@@ -94,13 +95,12 @@ export default function LoginNav() {
           </Link>
           <Link
             to="/post"
-            className={`relative inline-flex items-center gap-2 px-5 py-2 rounded-sm font-medium transition-all duration-300 shadow-sm ${
+            className={`relative inline-flex items-center gap-2 px-2.5 py-2.5 rounded-full font-medium transition-all duration-300 shadow-sm ${
               scrolled
                 ? "bg-[#C59A2F] text-white hover:scale-105 hover:shadow-md"
                 : "bg-transparent border border-white/80 text-white hover:bg-[#C59A2F] hover:text-white"
             }`}
           >
-            <span>Post</span>
             <MdAdd size={20} className="transition-transform duration-300" />
           </Link>
 
@@ -110,13 +110,12 @@ export default function LoginNav() {
             <button
               onClick={() => setDropdownOpen((prev) => !prev)}
               className={`flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-300 ${
-                scrolled
-                  ? "border-[#C59A2F] text-[#C59A2F] hover:bg-[#C59A2F] hover:text-white"
-                  : "border-white/70 text-white/90 hover:bg-[#C59A2F] hover:text-white"
+                scrolled &&
+                "bg-[#C59A2F] text-white/90 hover:bg-[#C59A2F] hover:text-white"
               } shadow-sm cursor-pointer`}
               aria-label="Profile"
             >
-              <MdPerson size={22} />
+              <RxHamburgerMenu size={20} />
             </button>
 
             {/* Dropdown Menu */}
@@ -135,7 +134,14 @@ export default function LoginNav() {
                 Explore
               </Link>
               <Link
-                to="/messages"
+                to="/connect"
+                className="block px-4 py-2 text-sm text-white hover:bg-[#C59A2F] hover:text-white transition-colors"
+                onClick={() => setDropdownOpen(false)}
+              >
+                Connect
+              </Link>
+              <Link
+                to="/chat"
                 className="block px-4 py-2 text-sm text-white hover:bg-[#C59A2F] hover:text-white transition-colors"
                 onClick={() => setDropdownOpen(false)}
               >

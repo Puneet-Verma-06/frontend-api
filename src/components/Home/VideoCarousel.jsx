@@ -2,23 +2,26 @@ import React, { useRef, useEffect, useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import "keen-slider/keen-slider.min.css";
-import "../styles/heroText.css"; 
+import "../styles/heroText.css";
 
 const slides = [
   {
     id: 1,
-    // video: "/videos/vid-1.mp4",
+    video:
+      "https://res.cloudinary.com/dvjqisuve/video/upload/v1763109113/vid-1_l15a9x.mp4",
     images: ["/images/img-1.png", "/images/img-2.png", "/images/img-3.png"],
   },
   {
     id: 2,
-    // video: "/videos/vid-1.mp4",
-    images: ["/images/img-1.png", "/images/img-2.png", "/images/img-3.png"],
+    video:
+      "https://res.cloudinary.com/dvjqisuve/video/upload/v1762853369/WhatsApp_Video_2025-11-08_at_15.06.10_40747acb_kpycbi.mp4",
+    images: ["https://res.cloudinary.com/dvjqisuve/image/upload/v1762853311/IMG-20251108-WA0024_yehkrt.jpg", "https://res.cloudinary.com/dvjqisuve/image/upload/v1762853301/IMG-20251108-WA0029_f93xn9.jpg", "https://res.cloudinary.com/dvjqisuve/image/upload/v1762853280/IMG-20251108-WA0044_oigrqr.jpg"],
   },
   {
     id: 3,
-    // video: "/videos/vid-1.mp4",
-    images: ["/images/img-1.png", "/images/img-2.png", "/images/img-3.png"],
+    video:
+      "https://res.cloudinary.com/dvjqisuve/video/upload/v1762853324/WhatsApp_Video_2025-11-09_at_12.54.30_221a96a4_b2gkcy.mp4",
+    images: ["https://res.cloudinary.com/dvjqisuve/image/upload/v1762853278/IMG-20251108-WA0052_huwahw.jpg", "https://res.cloudinary.com/dvjqisuve/image/upload/v1762853286/IMG-20251108-WA0047_dsekj3.jpg", "https://res.cloudinary.com/dvjqisuve/image/upload/v1762853288/IMG-20251108-WA0038_kcm8vg.jpg"],
   },
 ];
 
@@ -32,7 +35,7 @@ export default function VideoCarousel() {
     const next = () => {
       clearTimeout(timeout);
       if (mouseOver) return;
-      timeout = setTimeout(() => slider.next(), 20000);
+      timeout = setTimeout(() => slider.next(), 5000);
     };
     slider.on("created", () => {
       slider.container.addEventListener("mouseover", () => (mouseOver = true));
@@ -119,7 +122,9 @@ export default function VideoCarousel() {
 
                 <h1 className="hero-main text-white text-4xl md:text-6xl font-extrabold leading-tight">
                   Coz{" "}
-                  <span className="text-gradient-gold italic">“You Only Live Once”</span>
+                  <span className="text-gradient-gold italic">
+                    “You Only Live Once”
+                  </span>
                 </h1>
 
                 <p className="hero-tag text-white/70 text-sm md:text-lg tracking-wide max-w-xl mx-auto">
@@ -129,10 +134,17 @@ export default function VideoCarousel() {
 
               {/* Thumbnails row */}
               <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 w-full max-w-4xl px-6">
-                <div className="grid grid-cols-3 gap-8 place-items-center">
+                <div className="grid grid-cols-3 gap-6 place-items-center">
                   {s.images.map((img, idx) => (
-                    <div key={idx} className="p-3 bg-white/5 border border-white/20 rounded-lg shadow-sm">
-                      <img src={img} alt={`thumb-${i}-${idx}`} className="w-40 h-28 object-cover rounded-md" />
+                    <div
+                      key={idx}
+                      className="p-2 bg-white/5 border border-white/20 rounded-lg shadow-sm"
+                    >
+                      <img
+                        src={img}
+                        alt={`thumb-${i}-${idx}`}
+                        className="w-50 h-30 object-cover rounded-md"
+                      />
                     </div>
                   ))}
                 </div>
@@ -170,7 +182,9 @@ export default function VideoCarousel() {
             key={idx}
             onClick={() => moveTo(idx)}
             className={`w-3 h-3 rounded-full transition-transform transform ${
-              current === idx ? "scale-125 bg-brandGold" : "bg-white/50 hover:scale-110"
+              current === idx
+                ? "scale-125 bg-brandGold"
+                : "bg-white/50 hover:scale-110"
             }`}
             aria-label={`Go to slide ${idx + 1}`}
           />

@@ -1,8 +1,7 @@
 // src/api/authApi.js
 import axios from "axios";
 
-const RAW_BASE = import.meta.env.VITE_WEB_API || "http://localhost:3000/api";
-const baseURL = RAW_BASE.endsWith("/") ? RAW_BASE.slice(0, -1) : RAW_BASE;
+const baseURL = import.meta.env.VITE_WEB_API ;
 
 const api = axios.create({
   baseURL,

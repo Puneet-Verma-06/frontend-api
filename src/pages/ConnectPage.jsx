@@ -1,217 +1,426 @@
-import React, { useMemo, useState } from "react";
+// InstagramItineraryPageOptimized.jsx
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import {
+  FiHeart,
+  FiMessageCircle,
+  FiSend,
+  FiBookmark,
+  FiMapPin,
+} from "react-icons/fi";
 import { motion } from "framer-motion";
 
-const GOLD = "#d4af37";
+/* same helpers and constants as before */
+const LOCAL_IMAGE = "/mnt/data/7fb1df3a-9314-49dd-8495-51bfff57867a.png";
+const IMAGES = [
+  LOCAL_IMAGE,
+  "https://images.pexels.com/photos/27100767/pexels-photo-27100767.jpeg",
+  "https://images.pexels.com/photos/34858871/pexels-photo-34858871.jpeg",
+  "https://images.pexels.com/photos/34799840/pexels-photo-34799840.jpeg",
+  "https://images.pexels.com/photos/28010488/pexels-photo-28010488.jpeg",
+];
+const VIDEOS = [];
+const ITEM_HEIGHT = 600;
 
-const EMOJIS = ["👍", "❤️", "😂", "😮", "😢", "🙏"]; // WhatsApp-like
+// Intersection observer hook (unchanged)
+function useNearScreen({ root = null, rootMargin = "200px" } = {}) {
+  const [isNear, setIsNear] = useState(false);
+  const ref = useRef(null);
 
-function ReactionBar({ initialCounts = {}, onChange }) {
-  const [userReaction, setUserReaction] = useState(null); // one reaction at a time
-  const [counts, setCounts] = useState(() => {
-    const base = {};
-    EMOJIS.forEach((e) => (base[e] = initialCounts[e] || 0));
-    return base;
-  });
+  useEffect(() => {
+    if (!ref.current) return;
+    const el = ref.current;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => setIsNear(entry.isIntersecting));
+      },
+      { root, rootMargin }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [root, rootMargin]);
 
-  const handleReact = (emoji) => {
-    setCounts((prev) => {
-      const next = { ...prev };
-      if (userReaction === emoji) {
-        // toggle off
-        next[emoji] = Math.max(0, (next[emoji] || 0) - 1);
-        setUserReaction(null);
-      } else {
-        // switch reactions
-        if (userReaction) {
-          next[userReaction] = Math.max(0, (next[userReaction] || 0) - 1);
-        }
-        next[emoji] = (next[emoji] || 0) + 1;
-        setUserReaction(emoji);
-      }
-      onChange?.(next, userReaction === emoji ? null : emoji);
-      return next;
-    });
-  };
+  return [ref, isNear];
+}
+
+// PostRow expects index, style, data (keeps your original code mostly intact)
+function PostRow({ index, style, data }) {
+  const { posts, toggleLike, likedPosts } = data;
+  const post = posts[index];
+
+  const [videoRef, isVideoNear] = useNearScreen({ rootMargin: "300px" });
 
   return (
-    <div className="flex flex-wrap items-center gap-2 mt-3 select-none">
-      {EMOJIS.map((emoji) => {
-        const active = userReaction === emoji;
-        return (
-          <button
-            key={emoji}
-            type="button"
-            onClick={() => handleReact(emoji)}
-            className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm transition shadow-sm hover:shadow ${
-              active ? "scale-[1.03]" : ""
-            }`}
+    <div style={{ ...style, height: ITEM_HEIGHT }} className="p-3">
+      <article
+        className="bg-white border rounded-xl shadow-sm overflow-hidden card-gpu"
+        style={{ borderColor: "#f3e9d0", height: ITEM_HEIGHT - 24 }}
+      >
+        <div className="px-4 py-3 flex items-center gap-3">
+          <div
+            className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold"
             style={{
-              borderColor: active ? GOLD : `${GOLD}66`,
-              backgroundColor: active ? GOLD : "white",
-              color: active ? "white" : GOLD,
+              background: "linear-linear(135deg,#f6c93d 0%,#f3a200 100%)",
             }}
-            aria-pressed={active}
           >
-            <span>{emoji}</span>
-            <span className="tabular-nums">{counts[emoji] || 0}</span>
-          </button>
-        );
-      })}
+            {post.user[0].toUpperCase()}
+          </div>
+
+          <div>
+            <div className="font-semibold">{post.user}</div>
+            <div className="text-xs text-gray-500">{post.time}</div>
+          </div>
+        </div>
+
+        <div
+          className="w-full bg-gray-100 flex items-center justify-center"
+          style={{ height: 360 }}
+        >
+          {post.mediaType === "image" ? (
+            <img
+              src={post.media}
+              alt={`post-${post.id}`}
+              loading="lazy"
+              decoding="async"
+              width="1200"
+              height="800"
+              className="w-full h-full object-cover"
+              style={{ maxHeight: 360 }}
+            />
+          ) : (
+            <div ref={videoRef} className="w-full h-full">
+              {isVideoNear ? (
+                <video
+                  src={post.media}
+                  controls
+                  className="w-full h-full object-cover bg-black"
+                />
+              ) : (
+                <img
+                  src={IMAGES[index % IMAGES.length]}
+                  alt="video-poster"
+                  loading="lazy"
+                  decoding="async"
+                  width="1200"
+                  height="800"
+                  className="w-full h-full object-cover"
+                />
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <motion.button
+                whileTap={{ scale: 0.92 }}
+                onClick={() => toggleLike(post.id)}
+                className="flex items-center gap-2"
+              >
+                <FiHeart
+                  size={22}
+                  style={{ color: likedPosts[post.id] ? "#e11d48" : "inherit" }}
+                />
+              </motion.button>
+
+              <FiMessageCircle size={22} />
+              <FiSend size={22} />
+            </div>
+
+            <FiBookmark size={22} />
+          </div>
+
+          <div className="mt-3">
+            <div className="font-semibold">
+              {post.likes.toLocaleString()} likes
+            </div>
+            <div className="mt-2 text-sm">
+              <span className="font-semibold">{post.user} </span>
+              {post.caption}
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   );
 }
 
-function PostCard({ post }) {
-  return (
-    <motion.article
-      layout
-      initial={{ opacity: 0, translateY: 12 }}
-      animate={{ opacity: 1, translateY: 0 }}
-      transition={{ duration: 0.25 }}
-      className="rounded-2xl overflow-hidden border bg-white shadow-sm hover:shadow-md transition"
-      style={{ borderColor: `${GOLD}33` }}
-    >
-      {post.imageUrl ? (
-        <div className="w-full aspect-video bg-gray-50 overflow-hidden">
-          <img
-            src={post.imageUrl}
-            alt={post.title || "Post image"}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      ) : null}
+export default function InstagramItineraryPageOptimized() {
+  const [view, setView] = useState("posts");
+  const [likedPosts, setLikedPosts] = useState({});
+  const listRef = useRef(null); // now a DOM scroll container ref
 
-      <div className="p-4">
-        {post.title ? (
-          <h4 className="text-base font-semibold mb-1" style={{ color: GOLD }}>
-            {post.title}
-          </h4>
-        ) : null}
-        {post.content ? (
-          <p className="text-gray-700 leading-relaxed">{post.content}</p>
-        ) : null}
-        <ReactionBar initialCounts={post.reactions} />
-      </div>
-    </motion.article>
-  );
-}
+  const posts = Array.from({ length: 30 }).map((_, i) => {
+    const isVideo = i % 6 === 5 && VIDEOS.length > 0;
+    return {
+      id: i + 1,
+      user: ["rkive", "mansi", "tuktuk", "kashish"][i % 4],
+      caption: `Caption for post #${
+        i + 1
+      } — exploring places, vibes and travel tips.`,
+      mediaType: isVideo ? "video" : "image",
+      media: isVideo ? VIDEOS[i % VIDEOS.length] : IMAGES[i % IMAGES.length],
+      likes: Math.floor(1200 * (i + 1) * 3.14),
+      time: `${i + 1}d`,
+    };
+  });
 
-export default function ConnectPage({ user, posts }) {
-  // Demo fallback content if no props are provided
-  const fallbackUser = useMemo(
-    () =>
-      user || {
-        name: "Aarav Mehta",
-        address: "Bandra West, Mumbai, India",
-        avatar:
-          "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop",
-      },
-    [user]
-  );
+  const itineraries = [
+    {
+      id: 1,
+      user: "Aisha",
+      place: "Kasol, Himachal Pradesh",
+      summary: "Planning 5-day trip ...",
+      need: "money",
+      dates: "Jan 10 - Jan 14",
+    },
+    {
+      id: 2,
+      user: "Rohan",
+      place: "Manali, Himachal Pradesh",
+      summary: "Leaves approved ...",
+      need: "partner",
+      dates: "Feb 5 - Feb 8",
+    },
+    {
+      id: 3,
+      user: "Neha",
+      place: "Leh-Ladakh",
+      summary: "Solo traveller ...",
+      need: "group",
+      dates: "Jun 1 - Jun 8",
+    },
+    {
+      id: 4,
+      user: "Vikram",
+      place: "Rishikesh",
+      summary: "Yoga + river trip ...",
+      need: "partner",
+      dates: "Mar 20 - Mar 22",
+    },
+  ];
 
-  const fallbackPosts = useMemo(
-    () =>
-      posts || [
-        {
-          id: "p1",
-          title: "Sunrise at Kedarkantha",
-          content:
-            "Caught the first light kissing the peaks. The trail was peaceful and the air crisp—pure bliss!",
-          imageUrl:
-            "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop",
-          reactions: { "👍": 12, "❤️": 8, "😂": 0, "😮": 4, "😢": 0, "🙏": 2 },
-        },
-        {
-          id: "p2",
-          title: "Hidden café in Dehradun",
-          content:
-            "Stumbled upon a quaint café with the best masala chai. Added to the must-visit list!",
-          imageUrl:
-            "https://images.unsplash.com/photo-1498654200943-1088dd4438ae?q=80&w=1600&auto=format&fit=crop",
-          reactions: { "👍": 5, "❤️": 3, "😂": 1, "😮": 1, "😢": 0, "🙏": 0 },
-        },
-        {
-          id: "p3",
-          title: "Rishikesh river walk",
-          content:
-            "Evening stroll by the Ganga—soft breeze, temple bells, and friendly travelers everywhere.",
-          imageUrl:
-            "https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1600&auto=format&fit=crop",
-          reactions: { "👍": 9, "❤️": 6, "😂": 0, "😮": 2, "😢": 0, "🙏": 1 },
-        },
-      ],
-    [posts]
-  );
+  const toggleLike = useCallback((id) => {
+    setLikedPosts((s) => ({ ...s, [id]: !s[id] }));
+  }, []);
+
+  // scroll to top when switching to posts — now scroll container
+  useEffect(() => {
+    if (view === "posts" && listRef.current) {
+      listRef.current.scrollTop = 0;
+    }
+  }, [view]);
+
+  const itemData = { posts, toggleLike, likedPosts };
 
   return (
-    <div className="min-h-screen bg-white mt-4">
-      {/* Hero */}
-      <section className="px-4 sm:px-6 lg:px-10 pt-10 pb-6">
-        <motion.h1
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
-          className="text-center italic text-2xl sm:text-3xl font-semibold leading-snug"
-          style={{ color: GOLD }}
+    <div className="min-h-screen bg-white text-gray-900 antialiased">
+      <style>{`
+        .feed-scroll { -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+        .card-gpu { will-change: transform, opacity; backface-visibility: hidden; }
+      `}</style>
+
+      <div className="max-w-7xl mx-auto mt-16">
+        <header
+          className="flex items-center justify-end py-4 px-4 border-b sticky top-0 z-30 bg-white"
+          style={{ borderColor: "#f3e9d0" }}
         >
-          share your travel moments/stories & connect with new friends.
-        </motion.h1>
-      </section>
-
-      {/* Profile Card */}
-      <section className="px-4 sm:px-6 lg:px-10">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
-          className="mx-3 rounded-3xl bg-white border shadow-sm p-6 sm:p-8"
-          style={{ borderColor: `${GOLD}33` }}
-        >
-          <div className="flex flex-col items-center gap-4 text-center">
-            <div className="relative">
-              <img
-                src={fallbackUser.avatar}
-                alt={fallbackUser.name}
-                className="w-28 h-28 sm:w-32 sm:h-32 object-cover rounded-full ring-2"
-                style={{ ringColor: GOLD }}
-              />
-            </div>
-            <div>
-              <h2 className="text-xl sm:text-2xl font-semibold" style={{ color: GOLD }}>
-                {fallbackUser.name}
-              </h2>
-              <p className="text-gray-600">{fallbackUser.address}</p>
-            </div>
+          <div className="flex items-center gap-3">
+            <nav className="flex items-center gap-2 bg-white rounded-full p-1 shadow-sm">
+              <button
+                onClick={() => setView("posts")}
+                className={`px-4 py-2 rounded-full text-sm font-medium ${
+                  view === "posts"
+                    ? "bg-linear-to-r from-yellow-400 to-yellow-300 text-white shadow"
+                    : "text-gray-700"
+                }`}
+              >
+                Posts
+              </button>
+              <button
+                onClick={() => setView("itinerary")}
+                className={`px-4 py-2 rounded-full text-sm font-medium ${
+                  view === "itinerary"
+                    ? "bg-linear-to-r from-yellow-400 to-yellow-300 text-white shadow"
+                    : "text-gray-700"
+                }`}
+              >
+                Itinerary
+              </button>
+            </nav>
           </div>
-        </motion.div>
-      </section>
+        </header>
 
-      {/* Posts */}
-      <section className="px-4 sm:px-6 lg:px-10 mt-8 mb-12">
-        <div className="mx-3">
-          <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-lg sm:text-3xl italic font-semibold" style={{ color: GOLD }}>
-              Posts
-            </h3>
-          </div>
-
-          <div className="grid gap-6 sm:gap-7 md:grid-cols-4">
-            {fallbackPosts.map((post) => (
-              <PostCard key={post.id} post={post} />)
+        <main className="flex flex-col lg:flex-row gap-6 p-6">
+          <section className="flex-1">
+            {view === "posts" ? (
+              // Scrollable container replacing react-window List
+              <div
+                ref={listRef}
+                className="feed-scroll"
+                style={{
+                  maxHeight: Math.min(window.innerHeight * 0.78, 900),
+                  overflowY: "auto",
+                }}
+              >
+                {posts.map((_, i) => (
+                  // keep PostRow signature: index, style, data
+                  <PostRow
+                    key={posts[i].id}
+                    index={i}
+                    style={{}}
+                    data={itemData}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="text-lg font-semibold mb-2">
+                  People planning trips
+                </div>
+                <div className="flex flex-col gap-3 max-h-[60vh] overflow-auto pr-2 feed-scroll">
+                  {itineraries.map((it) => (
+                    <motion.div
+                      key={it.id}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-white border rounded-xl p-4 flex gap-4 items-start"
+                      style={{ borderColor: "#f3e9d0" }}
+                    >
+                      <div
+                        className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg"
+                        style={{
+                          background:
+                            "linear-linear(135deg,#f6c93d 0%,#f3a200 100%)",
+                        }}
+                      >
+                        {it.user[0]}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex flex-col">
+                            <div className="font-semibold">{it.user}</div>
+                            <div className="mt-2 flex items-center gap-2">
+                              <span
+                                className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium"
+                                style={{
+                                  background:
+                                    "linear-linear(90deg,#ffd27a,#f3b000)",
+                                  color: "#2b2b2b",
+                                }}
+                              >
+                                <FiMapPin className="text-black/70" />
+                                <span>{it.place || "Place not specified"}</span>
+                              </span>
+                              <span className="text-xs text-gray-500 ml-2">
+                                {it.dates}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="text-sm text-gray-600">
+                            needs:{" "}
+                            <span
+                              className="font-semibold"
+                              style={{ color: "#b8860b" }}
+                            >
+                              {it.need}
+                            </span>
+                          </div>
+                        </div>
+                        <p className="mt-3 text-sm text-gray-700">
+                          {it.summary}
+                        </p>
+                        <div className="mt-3 flex gap-2">
+                          <button
+                            className="px-3 py-1 rounded-md border text-sm"
+                            style={{ borderColor: "#f0e6d2" }}
+                          >
+                            Message
+                          </button>
+                          <button className="px-3 py-1 rounded-md bg-linear-to-r from-yellow-400 to-yellow-300 text-white text-sm">
+                            Offer Help
+                          </button>
+                          <button
+                            className="px-3 py-1 rounded-md bg-white border text-sm"
+                            style={{ borderColor: "#f0e6d2" }}
+                          >
+                            Share
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             )}
-          </div>
-        </div>
-      </section>
+          </section>
 
-      {/* Subtle bottom gradient accent */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-x-0 bottom-0 h-32 opacity-20"
-        style={{
-          background:
-            "radial-gradient(80% 80% at 50% 100%, #d4af37 0%, rgba(212,175,55,0) 70%)",
-        }}
-      />
+          <aside className="w-full lg:w-96 sticky top-20 self-start">
+            <div
+              className="bg-white rounded-xl p-4 flex items-center gap-4"
+              style={{ borderColor: "#f3e9d0" }}
+            >
+              <div
+                className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg"
+                style={{
+                  background: "linear-linear(135deg,#f6c93d 0%,#f3a200 100%)",
+                }}
+              >
+                M
+              </div>
+              <div>
+                <div className="font-semibold">Muskan</div>
+                <div className="text-sm text-gray-500">musk</div>
+              </div>
+            </div>
+
+            <div
+              className="mt-4 bg-white rounded-xl p-4"
+              style={{ borderColor: "#f3e9d0" }}
+            >
+              <div className="flex items-center justify-between">
+                <div className="font-semibold">Suggested for you</div>
+                <div className="text-sm text-gray-500">See All</div>
+              </div>
+              <ul className="mt-3 space-y-3">
+                <li className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                      M
+                    </div>
+                    <div className="text-sm">
+                      Mansi{" "}
+                      <span className="text-xs text-gray-400">
+                        · Followed by ish ...
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    className="text-sm font-medium"
+                    style={{ color: "#b8860b" }}
+                  >
+                    Follow
+                  </button>
+                </li>
+                <li className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                      T
+                    </div>
+                    <div className="text-sm">tuktuk</div>
+                  </div>
+                  <button
+                    className="text-sm font-medium"
+                    style={{ color: "#b8860b" }}
+                  >
+                    Follow
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </aside>
+        </main>
+      </div>
     </div>
   );
 }
