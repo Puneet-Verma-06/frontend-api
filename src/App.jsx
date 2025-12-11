@@ -21,7 +21,7 @@ function App() {
 
   // get token from localstorage
   const token = localStorage.getItem("auth_token");
-  const isLoggedIn = token && token !== "null" && token !== "undefined"; // safe validation
+  const isLoggedIn = token && token !== "null" && token !== "undefined"; 
 
   useEffect(() => {
     window.scrollTo(0, 0);

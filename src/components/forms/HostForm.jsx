@@ -260,7 +260,7 @@ export default function HostForm({ onSaved }) {
         </div>
 
         {/* Booking rules */}
-        <div className="mt-5 bg-gray-50 p-4 rounded border border-gray-300">
+        {/* <div className="mt-5 bg-gray-50 p-4 rounded border border-gray-300">
           <h3 className="text-lg font-semibold mb-2">Booking Rules</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
@@ -293,7 +293,7 @@ export default function HostForm({ onSaved }) {
               </select>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Media dropzone */}
         <div className="mt-5">

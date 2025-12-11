@@ -266,7 +266,7 @@ const Explore = () => {
   //   {
   //     name: "Vivek",
   //     trip: "Mountain View Homestay",
-  //     text: "Felt like staying with family. The host helped us plan our entire itinerary.",
+  //     text: "Felt like staying with family. The host helped us plan our entire Plan.",
   //     image:
   //       "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=800&auto=format&fit=crop",
   //   },

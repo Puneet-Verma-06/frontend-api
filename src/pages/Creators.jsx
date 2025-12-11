@@ -2,7 +2,6 @@ import Carousel from "../components/Carousel";
 import { FiMail, FiPhone } from "react-icons/fi";
 import { motion } from "framer-motion";
 
-// Images
 // import heroThumb from "/images/carousel-img1.png";
 import smallImgA from "/images/carousel-img1.png";
 import smallImgB from "/images/carousel-img2.png";
@@ -62,7 +61,7 @@ export default function CreatorsPage() {
             <div className="border border-[#f2e3b6] rounded-xl p-8 bg-white shadow-md hover:shadow-xl transition-all duration-300">
               <h3 className="text-2xl font-semibold text-[#b8860b] mb-3">At Athithya</h3>
               <p className="text-gray-700 text-sm leading-relaxed">
-                We believe in the power of storytelling and the magic that travel and living
+                We believe in the power of poststelling and the magic that travel and living
                 experiences bring to our lives. Our mission is to amplify voices that inspire others
                 to explore, connect, and grow. Whether you’re a blogger, creator, or traveler, we
                 provide the platform and community that helps you turn your passion into influence.
@@ -83,9 +82,9 @@ export default function CreatorsPage() {
             <div className="h-full border border-[#f1d18a] bg-white p-8 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300">
               <p className="text-sm leading-relaxed mb-5">
                 <span className="font-semibold text-[#b8860b]">Our philosophy</span> is simple:
-                meaningful connections comes from story telling. We want to empower emerging
+                meaningful connections comes from posts telling. We want to empower emerging
                 voices, giving them the visibility they deserve. Through our initiative, we help
-                small creators, bloggers, and storytellers shine brighter.
+                small creators, bloggers, and poststellers shine brighter.
               </p>
               <p className="text-sm leading-relaxed mb-5">
                 If you believe that with the right opportunity you could make a big impact in the

@@ -1,4 +1,4 @@
-// InstagramItineraryPageOptimized.jsx
+// InstagramPlanPageOptimized.jsx
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   FiHeart,
@@ -44,7 +44,7 @@ function useNearScreen({ root = null, rootMargin = "200px" } = {}) {
 
 // PostRow expects index, style, data (keeps your original code mostly intact)
 function PostRow({ index, style, data }) {
-  const { posts, toggleLike, likedPosts } = data;
+  const { posts, toggleLike, likedposts } = data;
   const post = posts[index];
 
   const [videoRef, isVideoNear] = useNearScreen({ rootMargin: "300px" });
@@ -119,7 +119,7 @@ function PostRow({ index, style, data }) {
               >
                 <FiHeart
                   size={22}
-                  style={{ color: likedPosts[post.id] ? "#e11d48" : "inherit" }}
+                  style={{ color: likedposts[post.id] ? "#e11d48" : "inherit" }}
                 />
               </motion.button>
 
@@ -145,9 +145,9 @@ function PostRow({ index, style, data }) {
   );
 }
 
-export default function InstagramItineraryPageOptimized() {
+export default function InstagramPlanPageOptimized() {
   const [view, setView] = useState("posts");
-  const [likedPosts, setLikedPosts] = useState({});
+  const [likedposts, setLikedposts] = useState({});
   const listRef = useRef(null); // now a DOM scroll container ref
 
   const posts = Array.from({ length: 30 }).map((_, i) => {
@@ -201,7 +201,7 @@ export default function InstagramItineraryPageOptimized() {
   ];
 
   const toggleLike = useCallback((id) => {
-    setLikedPosts((s) => ({ ...s, [id]: !s[id] }));
+    setLikedposts((s) => ({ ...s, [id]: !s[id] }));
   }, []);
 
   // scroll to top when switching to posts — now scroll container
@@ -211,7 +211,7 @@ export default function InstagramItineraryPageOptimized() {
     }
   }, [view]);
 
-  const itemData = { posts, toggleLike, likedPosts };
+  const itemData = { posts, toggleLike, likedposts };
 
   return (
     <div className="min-h-screen bg-white text-gray-900 antialiased">
@@ -235,17 +235,17 @@ export default function InstagramItineraryPageOptimized() {
                     : "text-gray-700"
                 }`}
               >
-                Posts
+                posts
               </button>
               <button
-                onClick={() => setView("itinerary")}
+                onClick={() => setView("Plan")}
                 className={`px-4 py-2 rounded-full text-sm font-medium ${
-                  view === "itinerary"
+                  view === "Plan"
                     ? "bg-linear-to-r from-yellow-400 to-yellow-300 text-white shadow"
                     : "text-gray-700"
                 }`}
               >
-                Itinerary
+                Plan
               </button>
             </nav>
           </div>

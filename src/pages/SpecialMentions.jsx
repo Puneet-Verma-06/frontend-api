@@ -47,7 +47,7 @@ const team = [
     role: "Marketing",
     img: fallbackImg,
     bio:
-      "Leads partnerships and social storytelling with data-informed strategy.",
+      "Leads partnerships and social poststelling with data-informed strategy.",
   },
   {
     name: "Yuvraj",

@@ -7,7 +7,7 @@ const GOLD = "#C59D5F";
 const emptyLocation = { city: "", country: "", address: "" };
 
 export default function TravellerForm() {
-  const [mode, setMode] = useState("story"); // story | itinerary
+  const [mode, setMode] = useState("posts"); // posts | Plan
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -72,9 +72,9 @@ export default function TravellerForm() {
 
   function buildFormData() {
     const fd = new FormData();
-    fd.append("postType", mode === "itinerary" ? "plan" : "experience");
-    fd.append("userRole", "traveller");
-    if (mode === "story") {
+    fd.append("postType", mode === "Plan" ? "plan" : "experience");
+    fd.append("userRole", "guest");
+    if (mode === "posts") {
       fd.append("title", caption.slice(0,120));
       fd.append("description", caption);
     } else {
@@ -93,7 +93,7 @@ export default function TravellerForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const require = mode === "story" ? (caption.trim().length > 0 || photos.length > 0) : destination.trim().length > 0;
+    const require = mode === "posts" ? (caption.trim().length > 0 || photos.length > 0) : destination.trim().length > 0;
     if (!require) { alert("Please fill required fields."); return; }
     setLoading(true); setProgress(0);
     try {
@@ -109,7 +109,7 @@ export default function TravellerForm() {
     } finally { setLoading(false); setProgress(0); }
   }
 
-  const canSubmit = mode === "story" ? (caption.trim().length>0 || photos.length>0) : destination.trim().length>0;
+  const canSubmit = mode === "posts" ? (caption.trim().length>0 || photos.length>0) : destination.trim().length>0;
 
   return (
     <div className="max-w-3xl mx-auto p-4 sm:p-6">
@@ -117,19 +117,19 @@ export default function TravellerForm() {
         <div className="flex items-start justify-between gap-4 mb-4">
           <div>
             <h2 className="text-2xl font-semibold" style={{ color: GOLD }}>Create Post</h2>
-            <p className="text-sm text-gray-600">Share a memory, create an itinerary, or invite travellers.</p>
+            <p className="text-sm text-gray-600">Share a memory, create an Plan, or invite travellers.</p>
           </div>
 
           <div className="flex gap-2">
-            <button type="button" onClick={()=>setMode("story")} className={`px-3 py-1 rounded cursor-pointer ${mode==="story" ? "bg-[#C59D5F] text-white" : "bg-white border border-gray-200"}`}>Story</button>
-            <button type="button" onClick={()=>setMode("itinerary")} className={`px-3 py-1 rounded cursor-pointer ${mode==="itinerary" ? "bg-[#C59D5F] text-white" : "bg-white border border-gray-200"}`}>Itinerary</button>
+            <button type="button" onClick={()=>setMode("posts")} className={`px-3 py-1 rounded cursor-pointer ${mode==="posts" ? "bg-[#C59D5F] text-white" : "bg-white border border-gray-200"}`}>posts</button>
+            <button type="button" onClick={()=>setMode("Plan")} className={`px-3 py-1 rounded cursor-pointer ${mode==="Plan" ? "bg-[#C59D5F] text-white" : "bg-white border border-gray-200"}`}>Plan</button>
           </div>
         </div>
 
-        {mode==="story" ? (
+        {mode==="posts" ? (
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">Write something</label>
-            <textarea value={caption} onChange={(e)=>setCaption(e.target.value)} rows={5} className="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2" placeholder="Tell your story..." />
+            <textarea value={caption} onChange={(e)=>setCaption(e.target.value)} rows={5} className="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2" placeholder="Tell your posts..." />
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
@@ -217,7 +217,7 @@ export default function TravellerForm() {
             style={{ background: canSubmit && !loading ? GOLD : "#E6E6E6" }}
             className={`px-5 py-2 rounded-lg font-medium ${canSubmit && !loading ? "text-white" : "text-gray-500"}`}
           >
-            {loading ? "Posting..." : mode==="story" ? "Post Story" : "Create Plan"}
+            {loading ? "Posting..." : mode==="posts" ? "Post posts" : "Create Plan"}
           </button>
         </div>
       </form>

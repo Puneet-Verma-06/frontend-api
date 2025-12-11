@@ -109,7 +109,7 @@ export default function ConnectPage({ user, posts }) {
     [user]
   );
 
-  const fallbackPosts = useMemo(
+  const fallbackposts = useMemo(
     () =>
       posts || [
         {
@@ -186,17 +186,17 @@ export default function ConnectPage({ user, posts }) {
         </motion.div>
       </section>
 
-      {/* Posts */}
+      {/* posts */}
       <section className="px-4 sm:px-6 lg:px-10 mt-8 mb-12">
         <div className="mx-3">
           <div className="mb-4 flex items-center justify-between">
             <h3 className="text-lg sm:text-3xl italic font-semibold" style={{ color: GOLD }}>
-              Posts
+              posts
             </h3>
           </div>
 
           <div className="grid gap-6 sm:gap-7 md:grid-cols-4">
-            {fallbackPosts.map((post) => (
+            {fallbackposts.map((post) => (
               <PostCard key={post.id} post={post} />)
             )}
           </div>
