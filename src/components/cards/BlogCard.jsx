@@ -1,23 +1,32 @@
-// src/components/cards/BlogCard.jsx
-import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
-const BlogCard = ({ image, title, readTime }) => {
+const BlogCard = ({ image, title, readTime, to }) => {
+  if (!to) {
+    console.warn("BlogCard missing `to` prop:", title);
+  }
+
   return (
-    <motion.div
-      whileHover={{ y: -4, scale: 1.01 }}
-      transition={{ type: "spring", stiffness: 260, damping: 20 }}
-      className="w-72 bg-white rounded-2xl overflow-hidden shadow-md shrink-0 cursor-pointer border border-gray-100"
+    <Link
+      to={to}
+      className="block w-72 shrink-0 group cursor-pointer"
     >
-      <div className="h-40 overflow-hidden">
-        <img src={image} alt={title} className="w-full h-full object-cover" />
+      <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition">
+        <img
+          src={image}
+          alt={title}
+          className="h-40 w-full object-cover"
+        />
+
+        <div className="p-4">
+          <h3 className="font-semibold text-gray-800 group-hover:text-[#C59A2F] transition line-clamp-2">
+            {title}
+          </h3>
+          <p className="text-sm text-gray-500 mt-1">
+            {readTime}
+          </p>
+        </div>
       </div>
-      <div className="p-4 flex flex-col gap-1">
-        <h3 className="font-semibold text-gray-900 line-clamp-2">
-          {title}
-        </h3>
-        <p className="text-xs text-gray-500 mt-1">{readTime}</p>
-      </div>
-    </motion.div>
+    </Link>
   );
 };
 

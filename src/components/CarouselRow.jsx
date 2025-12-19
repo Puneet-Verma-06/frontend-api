@@ -1,11 +1,13 @@
 // src/components/layout/CarouselRow.jsx
 import React, { useRef } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const CarouselRow = ({
   title,
   subtitle,
   actionLabel,
+  actionTo,
   onAction,
   backgroundClass = "bg-white",
   children,
@@ -35,35 +37,53 @@ const CarouselRow = ({
           )}
         </div>
 
+        {/* ACTION */}
         {actionLabel && (
-          <button
-            onClick={onAction}
-            className="hidden md:inline-flex items-center text-sm font-medium text-[#C59A2F] hover:underline"
-          >
-            {actionLabel}
-          </button>
+          <>
+            {actionTo ? (
+              <Link
+                to={actionTo}
+                className="inline-flex items-center text-sm font-medium text-[#C59A2F] hover:underline"
+              >
+                {actionLabel}
+              </Link>
+            ) : (
+              <button
+                onClick={onAction}
+                className="inline-flex items-center text-sm font-medium text-[#C59A2F] hover:underline"
+              >
+                {actionLabel}
+              </button>
+            )}
+          </>
         )}
       </div>
 
       <div className="relative">
+        {/* LEFT */}
         <button
           onClick={() => scrollRow("left")}
-          className="hidden md:flex items-center justify-center absolute -left-3 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm border border-yellow-400 text-yellow-600 p-3 rounded-full shadow-md hover:bg-yellow-50 transition z-10"
+          className="hidden md:flex items-center justify-center absolute -left-3 top-1/2 -translate-y-1/2
+                     bg-white/90 backdrop-blur-sm border border-yellow-400 text-yellow-600
+                     p-3 rounded-full shadow-md hover:bg-yellow-50 transition z-10"
         >
           <FaChevronLeft size={18} />
         </button>
 
+        {/* RIGHT */}
         <button
           onClick={() => scrollRow("right")}
-          className="hidden md:flex items-center justify-center absolute -right-3 top-1/2 -translate-y-1/2 bg-white/90 backdrop-blur-sm border border-yellow-400 text-yellow-600 p-3 rounded-full shadow-md hover:bg-yellow-50 transition z-10"
+          className="hidden md:flex items-center justify-center absolute -right-3 top-1/2 -translate-y-1/2
+                     bg-white/90 backdrop-blur-sm border border-yellow-400 text-yellow-600
+                     p-3 rounded-full shadow-md hover:bg-yellow-50 transition z-10"
         >
           <FaChevronRight size={18} />
         </button>
 
+        {/* ROW */}
         <div
           ref={rowRef}
           className="flex gap-5 overflow-x-auto overflow-y-visible scroll-smooth pt-2 pb-6 scrollbar-hide"
-          style={{ paddingTop: 12 }} 
         >
           {children}
         </div>

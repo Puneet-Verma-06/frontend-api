@@ -5,11 +5,61 @@
 }
 
 .big-gold {
-  text-shadow: 0 6px 18px rgba(145,107,9,0.08);
+  text-shadow: 0 6px 18px rgba(145, 107, 9, 0.08);
 }
 
-.GOLD {color: #C59A2F;}
-.GOLD-bg {background-color: #d4af37;}
+/* luxury gold theme helpers */
+.GOLD {
+  color: #c59a2f;
+}
+
+.GOLD-bg {
+  background-color: #d4af37;
+}
+
+/* soft champagne border (no black) */
+.soft-border {
+  border: 1px solid rgba(197, 154, 47, 0.18);
+}
+
+/* soft shadow using gold tint */
+.soft-shadow {
+  box-shadow: 0 10px 30px rgba(197, 154, 47, 0.06);
+}
+
+/* input style used across the form */
+.input-lux {
+  background: #ffffff;
+  border: 1px solid rgba(197, 154, 47, 0.12);
+  color: #222;
+}
+
+/* input focus (soft gold halo) */
+.input-lux:focus {
+  outline: none;
+  border-color: rgba(197, 154, 47, 0.9);
+  box-shadow: 0 0 0 6px rgba(212, 175, 55, 0.06);
+}
+
+/* rounded luxurious buttons */
+.btn-lux {
+  border-radius: 14px;
+  padding: 10px 18px;
+  font-weight: 400;
+}
+
+/* pill styles */
+.pill {
+  background: #faf7f0;
+  border-radius: 9999px;
+  padding: 6px 12px;
+  border: 1px solid rgba(197, 154, 47, 0.08);
+}
+
+/* small helper */
+.muted {
+  color: #6b7280;
+}
 
 .gold-cta-x {
   position: relative;

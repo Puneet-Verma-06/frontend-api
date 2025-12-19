@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import HostForm from "../components/forms/HostForm";
 import TravellerForm from "../components/forms/TravellerForm";
-
 export default function PostForm() {
   const [role, setRole] = useState(null); // "host" | "traveller"
   const [devOverride, setDevOverride] = useState(null); // optional preview override
@@ -25,7 +24,7 @@ export default function PostForm() {
   const effectiveRole = devOverride || role;
 
   return (
-    <div className="max-w-4xl mx-auto p-4 pt-12">
+    <div className="mx-8 p-4 pt-12">
       <div className="flex items-center justify-between mb-4"></div>
 
       {loading ? (
@@ -54,8 +53,8 @@ export default function PostForm() {
 
             <button
               onClick={() => {
-                localStorage.setItem("role", "traveller");
-                setRole("traveller");
+                localStorage.setItem("role", "guest");
+                setRole("guest");
               }}
               className="px-3 py-1 bg-green-600 text-white rounded"
             >

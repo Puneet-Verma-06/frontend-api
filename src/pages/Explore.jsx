@@ -18,7 +18,6 @@ import BlogCard from "../components/cards/BlogCard";
 import { useNavigate } from "react-router-dom";
 
 const Explore = () => {
-
   const navigate = useNavigate();
 
   // ---- dummy data (replace with API later) ----
@@ -254,8 +253,6 @@ const Explore = () => {
       rating: 4.9,
     },
   ];
-
-  // const testimonials = [
   //   {
   //     name: "Sneha & Karan",
   //     trip: "Kedarkantha Trek",
@@ -295,34 +292,25 @@ const Explore = () => {
 
   const blogs = [
     {
-      title: "Top 7 Himalayan Treks for First Timers",
+      title: "Top Places In Uttarakhand",
       image:
-        "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop",
+        "https://lp-cms-production.imgix.net/2022-03/GettyRF_956963154.jpg?auto=format,compress&q=72&w=1095&fit=crop&crop=faces,edges",
       readTime: "6 min read",
+      to: "/guides/top-7-himalayan-treks",
     },
     {
       title: "How to Start Hosting Your Homestay",
       image:
         "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop",
       readTime: "5 min read",
+      to: "/guides/how-to-start-hosting-homestay",
     },
     {
       title: "Best Season to Visit Uttarakhand",
       image:
-        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop",
+        "https://www.privatetajtour.com/wp-content/uploads/2024/09/1584012579_10_5.jpg.webp",
       readTime: "4 min read",
-    },
-    {
-      title: "Best Season to Visit Uttarakhand",
-      image:
-        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop",
-      readTime: "4 min read",
-    },
-    {
-      title: "Best Season to Visit Uttarakhand",
-      image:
-        "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop",
-      readTime: "4 min read",
+      to: "/guides/best-season-to-visit-uttarakhand",
     },
   ];
 
@@ -402,22 +390,12 @@ const Explore = () => {
         ))}
       </CarouselRow>
 
-      {/* Testimonials */}
-      {/* <CarouselRow
-        title="Stories from our travellers"
-        subtitle="Real trips, real memories shared by our community"
-        backgroundClass="bg-white"
-      >
-        {testimonials.map((t, idx) => (
-          <TestimonialCard key={idx} {...t} />
-        ))}
-      </CarouselRow> */}
-
       {/* Blogs */}
       <CarouselRow
         title="Travel Guides & Tips"
         subtitle="Learn before you go – curated by our team and hosts"
         actionLabel="Read all articles"
+        actionTo="/guides"
         backgroundClass="bg-[#FFF9EC]"
       >
         {blogs.map((b, idx) => (
