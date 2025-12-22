@@ -16,6 +16,10 @@ import HostCard from "../components/cards/HostCard";
 // import TestimonialCard from "../components/cards/TestimonialCard";
 import BlogCard from "../components/cards/BlogCard";
 import { useNavigate } from "react-router-dom";
+import FeaturedTreks from "../components/explore/FeaturedTreks";
+import TopRatedTreks from "../components/explore/TopRatedTreks";
+import TopRatedHosts from "../components/explore/TopRatedHosts";
+import NearbyTreks from "../components/explore/TreksNearbyYou";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -56,63 +60,6 @@ const Explore = () => {
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8AE3a3M-iE4YIxpG9XsZxKRpTDwpgN0UCcQ&s",
       city: "Telangana",
-    },
-  ];
-
-  const featuredTreks = [
-    {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxrlV4A5haFQWrR9X94Xpsr_X-s1BppvW-PQ&s",
-      title: "Kedarkantha Summit Trek",
-      days: "5D • 4N",
-      level: "Easy–Moderate",
-      price: "₹7,999",
-      location: "Uttarakhand, India",
-    },
-    {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN4KudN4rb5HWJOjTvOxedTsL6zW18Gjahzw&s",
-      title: "Valley of Flowers Trek",
-      days: "6D • 5N",
-      level: "Moderate",
-      price: "₹10,499",
-      location: "Uttarakhand, India",
-    },
-    {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-8CoSnhLkKkMXyRxLV5mMe7DUpqoY9GlRFA&s",
-      title: "Hampta Pass Trek",
-      days: "5D • 4N",
-      level: "Moderate",
-      price: "₹9,299",
-      location: "Himachal Pradesh, India",
-    },
-    {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8Vz30fuMB2ZpFl3flT0oEdW8-rru2XrbXtA&s",
-      title: "Sand Dunes Desert Safari",
-      days: "2D • 1N",
-      level: "Easy",
-      price: "₹3,499",
-      location: "Jaisalmer, Rajasthan",
-    },
-    {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN4KudN4rb5HWJOjTvOxedTsL6zW18Gjahzw&s",
-      title: "Valley of Flowers Trek",
-      days: "6D • 5N",
-      level: "Moderate",
-      price: "₹10,499",
-      location: "Uttarakhand, India",
-    },
-    {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN4KudN4rb5HWJOjTvOxedTsL6zW18Gjahzw&s",
-      title: "Valley of Flowers Trek",
-      days: "6D • 5N",
-      level: "Moderate",
-      price: "₹10,499",
-      location: "Uttarakhand, India",
     },
   ];
 
@@ -166,93 +113,6 @@ const Explore = () => {
       rating: 4.8,
     },
   ];
-
-  const collections = [
-    {
-      title: "Weekend Getaways",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIOLnQ3UsdL6hKxjgcaWdbRE03Zc5jQW3dtQ&s",
-      count: "120+ stays",
-    },
-    {
-      title: "For Solo Travellers",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIOLnQ3UsdL6hKxjgcaWdbRE03Zc5jQW3dtQ&s",
-      count: "80+ experiences",
-    },
-    {
-      title: "Luxury Retreats",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIOLnQ3UsdL6hKxjgcaWdbRE03Zc5jQW3dtQ&s",
-      count: "45+ villas",
-    },
-    {
-      title: "Budget Backpacks",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIOLnQ3UsdL6hKxjgcaWdbRE03Zc5jQW3dtQ&s",
-      count: "100+ trips",
-    },
-    {
-      title: "Budget Backpacks",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIOLnQ3UsdL6hKxjgcaWdbRE03Zc5jQW3dtQ&s",
-      count: "100+ trips",
-    },
-    {
-      title: "Budget Backpacks",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIOLnQ3UsdL6hKxjgcaWdbRE03Zc5jQW3dtQ&s",
-      count: "100+ trips",
-    },
-  ];
-
-  const hosts = [
-    {
-      image:
-        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop",
-      name: "Aditi Sharma",
-      role: "Trek Leader",
-      location: "Rishikesh, Uttarakhand",
-      tripsHosted: 120,
-      rating: 4.9,
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop",
-      name: "Rahul Verma",
-      role: "Homestay Owner",
-      location: "Manali, Himachal",
-      tripsHosted: 85,
-      rating: 4.8,
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop",
-      name: "Tsering Dorje",
-      role: "Local Guide",
-      location: "Leh, Ladakh",
-      tripsHosted: 60,
-      rating: 5.0,
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop",
-      name: "Aditi Sharma",
-      role: "Trek Leader",
-      location: "Rishikesh, Uttarakhand",
-      tripsHosted: 120,
-      rating: 4.9,
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=800&auto=format&fit=crop",
-      name: "Aditi Sharma",
-      role: "Trek Leader",
-      location: "Rishikesh, Uttarakhand",
-      tripsHosted: 120,
-      rating: 4.9,
-    },
-  ];
   //   {
   //     name: "Sneha & Karan",
   //     trip: "Kedarkantha Trek",
@@ -299,11 +159,11 @@ const Explore = () => {
       to: "/guides/top-7-himalayan-treks",
     },
     {
-      title: "How to Start Hosting Your Homestay",
+      title: "Best Treks In Uttarakhand",
       image:
-        "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1600&auto=format&fit=crop",
+        "https://www.bikatadventures.com/images/BlogspotContents/BlogspotImageUrl64790.jpg",
       readTime: "5 min read",
-      to: "/guides/how-to-start-hosting-homestay",
+      to: "/guides/best-treks-uttarakhand",
     },
     {
       title: "Best Season to Visit Uttarakhand",
@@ -311,6 +171,34 @@ const Explore = () => {
         "https://www.privatetajtour.com/wp-content/uploads/2024/09/1584012579_10_5.jpg.webp",
       readTime: "4 min read",
       to: "/guides/best-season-to-visit-uttarakhand",
+    },
+    {
+      title: "Uttarakhand Itineraries",
+      image:
+        "https://thumbs.dreamstime.com/b/devprayag-uttarakhand-india-28233199.jpg",
+      readTime: "5 min read",
+      to: "/guides/uttarakhand-itineraries",
+    },
+    {
+      title: "Uttarakhand Travel Cost",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2O8aBIuLmoyJRUnMr35xp4nUtB4i_SvoKsQ&s",
+      readTime: "3 min read",
+      to: "/guides/uttarakhand-travel-cost",
+    },
+    {
+      title: "Uttarakhand Packing List",
+      image:
+        "https://www.swantour.com/blogs/wp-content/uploads/2018/12/Packages-Tips.jpg",
+      readTime: "6 min read",
+      to: "/guides/uttarakhand-packing-list",
+    },
+    {
+      title: "Uttarakhand Travel Tips",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSb1cc5TbBNlH4vzoRj2Mh7l8zGmJN7jlEboA&s",
+      readTime: "6 min read",
+      to: "/guides/uttarakhand-travel-tips",
     },
   ];
 
@@ -350,51 +238,42 @@ const Explore = () => {
         actionLabel="Explore all treks"
         backgroundClass="bg-[#FFF9EC]"
       >
-        {featuredTreks.map((trek, idx) => (
-          <FeaturedTrekCard key={idx} {...trek} />
-        ))}
+        <FeaturedTreks />
       </CarouselRow>
 
       {/* Stays Near You */}
       <CarouselRow
         title="Treks Nearby You"
-        subtitle="Homestays, cabins and cottages near your location"
-        actionLabel="View all stays"
+        subtitle="Discover adventures close to your location"
+        actionLabel="View all"
         backgroundClass="bg-white"
       >
-        {staysNear.map((stay, idx) => (
-          <StayCard key={idx} {...stay} />
-        ))}
+        <NearbyTreks />
       </CarouselRow>
       {/* Top Rated Treks */}
       <CarouselRow
         title="Top Rated Treks"
-        subtitle="Homestays, cabins and cottages near your location"
-        actionLabel="View all stays"
+        subtitle="Highly rated by real trekkers"
+        actionLabel="View all treks"
         backgroundClass="bg-[#FFF9EC]"
       >
-        {staysNear.map((stay, idx) => (
-          <StayCard key={idx} {...stay} />
-        ))}
+        <TopRatedTreks />
       </CarouselRow>
 
       {/* Top Hosts */}
       <CarouselRow
         title="Top Rated Hosts"
-        subtitle="Trusted experts who know the mountains, cities and stories"
+        subtitle="Trusted experts loved by travelers"
         actionLabel="Meet all hosts"
         backgroundClass="bg-white"
       >
-        {hosts.map((host, idx) => (
-          <HostCard key={idx} {...host} />
-        ))}
+        <TopRatedHosts />
       </CarouselRow>
 
       {/* Blogs */}
       <CarouselRow
         title="Travel Guides & Tips"
         subtitle="Learn before you go – curated by our team and hosts"
-        actionLabel="Read all articles"
         actionTo="/guides"
         backgroundClass="bg-[#FFF9EC]"
       >

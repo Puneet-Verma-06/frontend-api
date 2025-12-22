@@ -72,7 +72,8 @@ const PLACES = [
   {
     id: "chopta",
     title: "Chopta",
-    image: "https://images.unsplash.com/photo-1580651315530-69c8e9c9b87a",
+    image:
+      "https://imgcld.yatra.com/ytimages/image/upload/t_yt_blog_c_fill_q_auto:good_f_auto_w_800_h_500/v1481019868/DO_NOT_USE_DISCOVER_INDIA_EDITORIAL/Chopta_Blog1.jpg",
     desc: "Often called Mini Switzerland of India, Chopta is the base for the Tungnath–Chandrashila trek.",
     bestFor: "Trekking, nature",
     bestSeason: "Apr – Jun · Oct – Nov",
@@ -81,7 +82,8 @@ const PLACES = [
   {
     id: "valley-of-flowers",
     title: "Valley of Flowers",
-    image: "https://images.unsplash.com/photo-1590121602276-1c42c13d1c44",
+    image:
+      "https://www.trekupindia.com/wp-content/uploads/2024/05/uttrakhand-valley-of-flowers-trek-1024x576.webp",
     desc: "A UNESCO World Heritage Site famous for alpine flowers, blooming spectacularly during monsoon.",
     bestFor: "Nature lovers, photographers",
     bestSeason: "Jul – Sep",
@@ -90,7 +92,7 @@ const PLACES = [
   {
     id: "jim-corbett",
     title: "Jim Corbett National Park",
-    image: "https://images.unsplash.com/photo-1618336753974-aae8e04506aa",
+    image: "https://uttarakhandtourism.gov.in/assets/media/UTDB_media_1735984081Jungle_safari.jpg",
     desc: "India’s oldest national park, known for tiger safaris, dense forests, and rich wildlife.",
     bestFor: "Wildlife, safaris",
     bestSeason: "Nov – Jun",
@@ -131,7 +133,7 @@ export default function TopPlacesUttarakhand() {
       <section className=" mx-6 px-6 py-16 grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-14">
         {/* ===== Sticky TOC ===== */}
         <aside className="hidden lg:block">
-          <div className="sticky top-24 bg-white rounded-xl p-5 border input-lux">
+          <div className="sticky top-20 bg-white rounded-xl p-5 border input-lux">
             <h4 className="text-sm font-semibold mb-3" style={{ color: GOLD }}>
               On this page
             </h4>

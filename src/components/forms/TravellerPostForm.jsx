@@ -6,7 +6,7 @@ import { FiChevronDown, FiX, FiUpload } from "react-icons/fi";
 import { createPost } from "../../api/posts";
 
 /* ---------------- CONSTANT ---------------- */
-const POST_TYPE = "post";
+const POST_TYPE = "experience";
 
 /* ---------------- UI HELPERS ---------------- */
 
@@ -194,6 +194,9 @@ export default function TravellerPostForm() {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+
   /* ---------------- Photos ---------------- */
   const onDropPhotos = useCallback((files) => {
     setPhotos((p) => [
@@ -220,6 +223,10 @@ export default function TravellerPostForm() {
 
     if (!title.trim()) return alert("Title is required");
     if (!description.trim()) return alert("Description is required");
+    if (photos.length === 0) {
+      alert("Please upload at least one photo");
+      return;
+    }
 
     const fd = new FormData();
     fd.append("postType", POST_TYPE);
@@ -228,11 +235,30 @@ export default function TravellerPostForm() {
     fd.append("categories", JSON.stringify(categories));
     fd.append("tags", JSON.stringify(tags));
     fd.append("amenities", JSON.stringify(amenities));
+    // -------- LOCATION PAYLOAD (FRONTEND) --------
+    const locationPayload = {
+      city: "",
+      state: "",
+      country: "India",
+    };
+
+    // only attach coordinates if user actually selected them
+    if (latitude !== null && longitude !== null) {
+      locationPayload.coordinates = {
+        type: "Point",
+        coordinates: [longitude, latitude], // [lng, lat]
+      };
+    }
+
+    fd.append("location", JSON.stringify(locationPayload));
+
     photos.forEach((p) => fd.append("photos", p.file));
 
     setLoading(true);
     try {
-      await createPost(fd);
+      await createPost(fd, {
+        token: localStorage.getItem("auth_token"),
+      });
       alert("Post created successfully");
 
       setTitle("");

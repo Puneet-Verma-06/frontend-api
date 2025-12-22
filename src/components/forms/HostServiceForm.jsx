@@ -209,7 +209,6 @@ export default function HostServiceForm({ onSaved }) {
 
   // pricing / capacity
   const [price, setPrice] = useState("");
-  const [currency] = useState("INR");
   const [maxPeople, setMaxPeople] = useState(1);
 
   // scheduling
@@ -220,6 +219,11 @@ export default function HostServiceForm({ onSaved }) {
   const [media, setMedia] = useState([]); // {file, preview}
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
+  // location
+  const [city, setCity] = useState("");
+  const [stateField, setStateField] = useState("");
+  const [country, setCountry] = useState("India");
+  const [meetingPoint, setMeetingPoint] = useState("");
 
   // dropzone
   const onDrop = useCallback((files) => {
@@ -285,6 +289,8 @@ export default function HostServiceForm({ onSaved }) {
     if (!summary.trim()) return "Short summary required";
     if (!description.trim()) return "Description required";
     if (!price) return "Price required";
+    if (!city.trim() || !stateField.trim())
+      return "City and State are required";
     return null;
   }
 
@@ -300,12 +306,28 @@ export default function HostServiceForm({ onSaved }) {
     fd.append("description", description);
     fd.append(
       "price",
-      JSON.stringify({ amount: Number(price || 0), currency })
+      JSON.stringify({
+        perPerson: Number(price || 0),
+        currency: "INR",
+        period,
+      })
     );
-    fd.append("maxPeople", String(Number(maxPeople || 1)));
+    fd.append("availability", JSON.stringify({ isAvailable: true }));
+
     fd.append(
-      "duration",
-      JSON.stringify({ value: Number(duration || 1), period })
+      "capacity",
+      JSON.stringify({ maxPeople: Number(maxPeople || 1) })
+    );
+    fd.append("duration", JSON.stringify({ days: 1, nights: 0 }));
+
+    fd.append(
+      "location",
+      JSON.stringify({
+        city,
+        state: stateField,
+        country,
+        meetingPoint,
+      })
     );
 
     if (categories.length) fd.append("categories", JSON.stringify(categories));
@@ -389,6 +411,42 @@ export default function HostServiceForm({ onSaved }) {
               placeholder="Full description, inclusions, duration, pre-reqs…"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              style={INPUT_STYLE}
+            />
+          </Section>
+
+          <Section title="Location">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <input
+                className="input-lux rounded-lg px-3 py-2"
+                placeholder="City (e.g. Rishikesh)"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                style={INPUT_STYLE}
+              />
+
+              <input
+                className="input-lux rounded-lg px-3 py-2"
+                placeholder="State (e.g. Uttarakhand)"
+                value={stateField}
+                onChange={(e) => setStateField(e.target.value)}
+                style={INPUT_STYLE}
+              />
+
+              <input
+                className="input-lux rounded-lg px-3 py-2"
+                placeholder="Country"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                style={INPUT_STYLE}
+              />
+            </div>
+
+            <input
+              className="input-lux rounded-lg px-3 py-2 w-full mt-3"
+              placeholder="Meeting point (optional)"
+              value={meetingPoint}
+              onChange={(e) => setMeetingPoint(e.target.value)}
               style={INPUT_STYLE}
             />
           </Section>

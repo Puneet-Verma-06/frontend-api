@@ -1,11 +1,13 @@
 // src/api/itineraries.js
-import { axiosInstance } from "./posts"; // reuse axios instance (same config/timeouts)
-import { API_BASE } from "./allApi";     // your environment-based base url
+import { axiosInstance } from "./posts";
+import { ENDPOINTS } from "./allApi";
 
-const BASE = API_BASE ;
-const ENDPOINT = `${BASE}/itineraries`; // POST /api/itineraries, GET /api/itineraries/:id
+const ENDPOINT = ENDPOINTS.ITINERARIES;
 
-export async function createItinerary(formData, { onUploadProgress, token, signal } = {}) {
+export async function createItinerary(
+  formData,
+  { onUploadProgress, token, signal } = {}
+) {
   try {
     const config = {
       headers: {
@@ -25,7 +27,10 @@ export async function createItinerary(formData, { onUploadProgress, token, signa
     return res.data;
   } catch (err) {
     const message =
-      err?.response?.data?.message || err?.response?.data?.error || err?.message || "Network error";
+      err?.response?.data?.message ||
+      err?.response?.data?.error ||
+      err?.message ||
+      "Network error";
     const status = err?.response?.status || null;
     console.error("createItinerary error:", { status, message, original: err });
     throw { success: false, message, status, original: err };
@@ -42,7 +47,10 @@ export async function getItinerary(id, { token } = {}) {
     });
     return res.data;
   } catch (err) {
-    const message = err?.response?.data?.message || err?.message || "Failed to fetch itinerary";
+    const message =
+      err?.response?.data?.message ||
+      err?.message ||
+      "Failed to fetch itinerary";
     console.error("getItinerary error:", message, err);
     throw { success: false, message, original: err };
   }
@@ -60,7 +68,10 @@ export async function listItineraries(params = {}, { token } = {}) {
     });
     return res.data;
   } catch (err) {
-    const message = err?.response?.data?.message || err?.message || "Failed to list itineraries";
+    const message =
+      err?.response?.data?.message ||
+      err?.message ||
+      "Failed to list itineraries";
     console.error("listItineraries error:", message, err);
     throw { success: false, message, original: err };
   }

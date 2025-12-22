@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useDropzone } from "react-dropzone";
-import * as PostsAPI from "../../api/posts";
+import { createItinerary } from "../../api/itineraries";
 import { FiChevronDown } from "react-icons/fi";
 
 /* ----------------------- visual constants ----------------------- */
@@ -190,7 +190,6 @@ function validateDateRange(range) {
 export default function HostPlanForm({ onSaved }) {
   // core text fields
   const [title, setTitle] = useState("");
-  const [shortDesc, setShortDesc] = useState("");
   const [longDesc, setLongDesc] = useState("");
 
   // structured fields
@@ -297,9 +296,8 @@ export default function HostPlanForm({ onSaved }) {
   function buildFormData() {
     const fd = new FormData();
     fd.append("userRole", "host");
-    fd.append("postType", "trek");
+    fd.append("postType", "plan");
     fd.append("title", title);
-    fd.append("shortDesc", shortDesc);
     fd.append("description", longDesc);
 
     const locationObj = {
@@ -326,13 +324,17 @@ export default function HostPlanForm({ onSaved }) {
 
     fd.append("tags", JSON.stringify(tags));
     fd.append("amenities", JSON.stringify(amenities));
-
-    const availToSend = availability.map((a) => ({
-      start: a.start,
-      end: a.end,
-      notes: a.notes,
-    }));
-    fd.append("availability", JSON.stringify(availToSend));
+    fd.append(
+      "availability",
+      JSON.stringify({
+        isAvailable: availability.length > 0,
+        ranges: availability.map(({ start, end, notes }) => ({
+          start,
+          end,
+          notes,
+        })),
+      })
+    );
 
     media
       .filter((m) => m.type === "image")
@@ -358,7 +360,7 @@ export default function HostPlanForm({ onSaved }) {
       const fd = buildFormData();
       const token = window.localStorage.getItem("auth_token");
 
-      const data = await PostsAPI.createPost(fd, {
+      const data = await createItinerary(fd, {
         onUploadProgress: (p) => setProgress(p),
         token,
       });
@@ -367,7 +369,6 @@ export default function HostPlanForm({ onSaved }) {
         setProgress(100);
         // reset some fields
         setTitle("");
-        setShortDesc("");
         setLongDesc("");
         setAvailability([]);
         media.forEach((m) => m.preview && URL.revokeObjectURL(m.preview));
@@ -411,12 +412,6 @@ export default function HostPlanForm({ onSaved }) {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Kedarkantha Summit Trek"
-                />
-                <Input
-                  label="Short tagline"
-                  value={shortDesc}
-                  onChange={(e) => setShortDesc(e.target.value)}
-                  placeholder="1-line summary"
                 />
               </div>
 

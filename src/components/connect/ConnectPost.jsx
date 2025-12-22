@@ -40,8 +40,8 @@ const ConnectPost = () => {
 
   useEffect(() => {
     async function fetchPosts() {
-      const res = await axios.get(ENDPOINTS.ALL_POST);
-      setPosts(res.data?.treks || []);
+      const res = await axios.get(ENDPOINTS.POSTS);
+      setPosts(res.data?.experiences || []);
       setLoading(false);
     }
     fetchPosts();
@@ -49,7 +49,9 @@ const ConnectPost = () => {
 
   const locations = useMemo(() => {
     const set = new Set(
-      posts.map((p) => `${p.location?.city}, ${p.location?.state}`)
+      posts
+        .filter((p) => p.location?.city && p.location?.state)
+        .map((p) => `${p.location.city}, ${p.location.state}`)
     );
     return ["all", ...Array.from(set)];
   }, [posts]);
@@ -74,6 +76,13 @@ const ConnectPost = () => {
       },
     }));
     setOpenPicker(null);
+  }
+
+  function toggleRaise(postId) {
+    setRaised((prev) => ({
+      ...prev,
+      [postId]: (prev[postId] || 0) + 1,
+    }));
   }
 
   function handleShare(post) {
@@ -124,7 +133,10 @@ const ConnectPost = () => {
               {/* Image */}
               <div className="h-56 bg-gray-100">
                 <img
-                  src={post.photos?.[0]?.url}
+                  src={
+                    post.photos?.[0]?.url ||
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/330px-Placeholder_view_vector.svg.png"
+                  }
                   alt={post.title}
                   className="w-full h-full object-cover"
                 />
@@ -151,7 +163,17 @@ const ConnectPost = () => {
                     <FiMapPin /> {post.location.city}, {post.location.state}
                   </span>
                   <span className="flex items-center gap-1">
-                    <FiClock /> {post.duration.days}D / {post.duration.nights}N
+                    {post.duration?.days ? (
+                      <span className="flex items-center gap-1">
+                        <FiClock />
+                        {post.duration.days} Day
+                        {post.duration.days > 1 ? "s" : ""}
+                      </span>
+                    ) : (
+                      <span className="text-xs text-gray-400">
+                        Duration not specified
+                      </span>
+                    )}
                   </span>
                 </div>
 

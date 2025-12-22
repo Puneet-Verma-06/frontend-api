@@ -243,7 +243,7 @@ export default function TravellerPlanForm() {
     fd.append("postType", POST_TYPE);
     fd.append("title", title);
     fd.append("description", description);
-    fd.append("planName", planName);
+    fd.append("plan", JSON.stringify({ name: planName }));
     fd.append("location", JSON.stringify(location));
     fd.append("duration", JSON.stringify({ days, nights }));
     fd.append("capacity", JSON.stringify({ maxPeople }));
@@ -260,17 +260,19 @@ export default function TravellerPlanForm() {
     fd.append("amenities", JSON.stringify(amenities));
     fd.append(
       "availability",
-      JSON.stringify(
-        availability.map(({ start, end, notes }) => ({
+      JSON.stringify({
+        isAvailable: availability.length > 0,
+        ranges: availability.map(({ start, end, notes }) => ({
           start,
           end,
           notes,
-        }))
-      )
+        })),
+      })
     );
 
     try {
       await createItinerary(fd, {
+        token: localStorage.getItem("auth_token"),
         onUploadProgress: (p) => setProgress(Math.floor(p || 0)),
       });
     } catch {
@@ -287,6 +289,11 @@ export default function TravellerPlanForm() {
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* ================= TOP ================= */}
         <Section title="Basic details">
+          <input
+            placeholder="Plan name (optional)"
+            value={planName}
+            onChange={(e) => setPlanName(e.target.value)}
+          />
           <input
             className="input-lux rounded-lg px-3 py-2 w-full text-base font-medium"
             placeholder="Trip title"

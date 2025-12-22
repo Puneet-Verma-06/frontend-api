@@ -27,6 +27,10 @@ function getLookingFor(tags = []) {
   ).map((l) => l.label);
 }
 
+function handleMessage(plan) {
+  alert(`Messaging ${plan.user?.firstname}`);
+}
+
 /* ---------------- component ---------------- */
 
 const ConnectPlan = () => {
@@ -40,7 +44,6 @@ const ConnectPlan = () => {
   const [lookingFor, setLookingFor] = useState("all");
   const [sortBy, setSortBy] = useState("default"); // default | rating_desc | rating_asc
   const [topRatedOnly, setTopRatedOnly] = useState(false);
-
 
   useEffect(() => {
     async function fetchPlans() {
@@ -57,7 +60,10 @@ const ConnectPlan = () => {
   }, []);
 
   function toggleRaise(id) {
-    setRaised((r) => ({ ...r, [id]: r[id] ? r[id] - 1 : 1 }));
+    setRaised((r) => ({
+      ...r,
+      [id]: (r[id] || 0) + 1,
+    }));
   }
 
   function toggleExpand(id) {
@@ -71,7 +77,12 @@ const ConnectPlan = () => {
       // Looking for filter
       if (lookingFor !== "all") {
         const lf = getLookingFor(p.tags || []);
-        if (!lf.map((x) => x.toLowerCase()).includes(lookingFor)) return false;
+        if (
+          lookingFor !== "all" &&
+          !lf.some((x) => x.toLowerCase().includes(lookingFor))
+        ) {
+          return false;
+        }
       }
 
       // Top rated filter
@@ -112,7 +123,6 @@ const ConnectPlan = () => {
 
   return (
     <div className="space-y-12">
-
       {/* ---------------- FILTER BAR ---------------- */}
       <div className="flex flex-wrap gap-4 items-end">
         <PremiumSelect
@@ -159,8 +169,7 @@ const ConnectPlan = () => {
         const isExpanded = expanded[plan._id];
 
         const isTopRated =
-          (plan.rating?.average || 0) >= 4.5 &&
-          (plan.rating?.count || 0) >= 3;
+          (plan.rating?.average || 0) >= 4.5 && (plan.rating?.count || 0) >= 3;
 
         return (
           <motion.article
@@ -209,7 +218,13 @@ const ConnectPlan = () => {
               </span>
 
               <span className="flex items-center gap-1">
-                <FiCalendar /> {duration.days} days · {duration.nights} nights
+                <FiCalendar />
+                {duration.days} day{duration.days > 1 ? "s" : ""}
+                {duration.nights
+                  ? ` · ${duration.nights} night${
+                      duration.nights > 1 ? "s" : ""
+                    }`
+                  : ""}
               </span>
 
               <span className="flex items-center gap-1">
@@ -277,7 +292,8 @@ const ConnectPlan = () => {
                 Raise {raised[plan._id] || 0}
               </button>
 
-              <button className="flex cursor-pointer items-center gap-1 text-sm text-gray-600 hover:text-gray-900">
+              <button className="flex cursor-pointer items-center gap-1 text-sm text-gray-600 hover:text-gray-900"
+              onClick={()=> handleMessage(plan)}>
                 <FiMessageCircle />
                 Message
               </button>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FiMapPin, FiCalendar, FiSearch, FiX } from "react-icons/fi";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
+import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
   const [location, setLocation] = useState("");
@@ -88,8 +89,18 @@ const SearchBar = () => {
     setRange({ from: undefined, to: undefined });
   };
 
+  const navigate = useNavigate();
+
   const handleSearch = () => {
-    console.log("Search →", { location, range });
+    const params = new URLSearchParams();
+
+    if (location) params.set("location", location);
+
+    if (range?.from) params.set("from", range.from.toISOString().split("T")[0]);
+
+    if (range?.to) params.set("to", range.to.toISOString().split("T")[0]);
+
+    navigate(`/search?${params.toString()}`);
   };
 
   return (
@@ -101,7 +112,7 @@ const SearchBar = () => {
       >
         {/* WHERE TO */}
         <div className="relative flex items-center flex-1 px-3">
-          <FiMapPin className="text-gray-500 mr-2 w-12"/>
+          <FiMapPin className="text-gray-500 mr-2 w-12" />
           <input
             type="text"
             value={location}
